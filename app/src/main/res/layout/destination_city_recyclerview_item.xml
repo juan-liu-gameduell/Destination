@@ -9,8 +9,8 @@
                                     card_view:cardUseCompatPadding="true">
 
     <RelativeLayout
-        android:layout_width="160dp"
-        android:layout_height="160dp">
+        android:layout_width="@dimen/destination_city_recyclerview_item_width"
+        android:layout_height="@dimen/destination_city_recyclerview_item_height">
 
         <ImageView
             android:id="@+id/destination_city_image"

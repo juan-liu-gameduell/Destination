@@ -36,7 +36,9 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         City city = mCities.get(position);
         holder.cityName.setText(city.getName());
         Context context = holder.cityImage.getContext();
-        Picasso.with(context).load(city.getImages().get(0)).resize(160,160).centerCrop().into(holder.cityImage);
+        float px = 160 * context.getResources().getDisplayMetrics().density;
+        int pixel = (int) px;
+        Picasso.with(context).load(city.getImages().get(0)).resize(pixel, pixel).centerCrop().into(holder.cityImage);
     }
 
     @Override

@@ -1,0 +1,5 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="destination_city_recyclerview_item_width">180dp</dimen>
+    <dimen name="destination_city_recyclerview_item_height">180dp</dimen>
+</resources>
