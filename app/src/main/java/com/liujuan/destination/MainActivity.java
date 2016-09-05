@@ -1,21 +1,17 @@
 package com.liujuan.destination;
 
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.model.City;
 
 import java.util.ArrayList;
@@ -26,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<City> mCities;
-    private PlaceAutocompleteFragment citySearchFragment;
-    private View citySearchCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +29,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mockCities();
         mRecyclerView = (RecyclerView) findViewById(R.id.destination_city_recyclerview);
-        citySearchCardView = findViewById(R.id.city_search_cardView);
 
+
+        setupRecyclerView();
+        setupToolBar();
+
+
+    }
+
+    private void setupRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
 
         Configuration config = getResources().getConfiguration();
@@ -49,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new CityAdapter(mCities);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
-        setupToolBar();
-        setupPlaceSelectListener();
     }
 
     private void setupToolBar() {
@@ -93,47 +91,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.actionbar_search) {
-            showCitySearchFragment();
+            startCityDetailActivity();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (citySearchCardView.getVisibility() == View.VISIBLE) {
-            hideCitySearchFragment();
-        } else {
-            super.onBackPressed();
-        }
-    }
+    private void startCityDetailActivity() {
+        Intent intent = new Intent(this, CityDetailActivity.class);
+        startActivity(intent);
 
-    private void showCitySearchFragment() {
-        citySearchCardView.setVisibility(View.VISIBLE);
-    }
-
-    private void hideCitySearchFragment() {
-        citySearchCardView.setVisibility(View.GONE);
-    }
-
-    private void setupPlaceSelectListener() {
-        citySearchFragment = (PlaceAutocompleteFragment)
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-
-        citySearchFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-            @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName());
-                hideCitySearchFragment();
-            }
-
-            @Override
-            public void onError(Status status) {
-
-                // TODO: Handle the error.
-                Log.i(TAG, "An error occurred: " + status);
-            }
-        });
     }
 
 }
