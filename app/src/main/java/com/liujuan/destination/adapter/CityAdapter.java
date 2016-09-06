@@ -1,6 +1,7 @@
 package com.liujuan.destination.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.liujuan.destination.CityDetailActivity;
 import com.liujuan.destination.R;
 import com.liujuan.destination.model.City;
 import com.squareup.picasso.Picasso;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
  */
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
+    public static final String EXTRA_CITY = "city";
     private ArrayList<City> mCities;
 
     public CityAdapter(ArrayList<City> cityiesData) {
@@ -34,12 +37,20 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(CityAdapter.ViewHolder holder, int position) {
-        City city = mCities.get(position);
+        final City city = mCities.get(position);
         holder.cityName.setText(city.getName());
-        Context context = holder.cityImage.getContext();
+        final Context context = holder.cityImage.getContext();
         float px = 160 * context.getResources().getDisplayMetrics().density;
         int pixel = (int) px;
         Picasso.with(context).load(city.getImages().get(0)).resize(pixel, pixel).centerCrop().into(holder.cityImage);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, CityDetailActivity.class);
+                intent.putExtra(EXTRA_CITY, city);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

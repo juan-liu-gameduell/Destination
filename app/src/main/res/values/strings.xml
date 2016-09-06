@@ -4,4 +4,6 @@
     <string name="clear_history">clear histories</string>
     <string name="input_city_name">input city name</string>
     <string name="action_favorite">Favorite</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
