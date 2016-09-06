@@ -1,6 +1,8 @@
 package com.liujuan.destination;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -21,6 +23,8 @@ import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.model.City;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/9/5.
@@ -28,27 +32,25 @@ import java.util.ArrayList;
 public class CityDetailActivity extends AppCompatActivity {
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     public static final String CURRENT_CITY = "currentCity";
-    public static final String CURRENT_FAVORITE_STATE = "currentFavoriteState";
-    public static final int WHAT_UPDATE_GALLERY = 0;
-    private TextView mCityName;
-    private boolean isFavorite = false;
+    public static final String KET_FAVORITE_CITIES = "Favorite cities";
+    private TextView mCityNameView;
     private City mCurrentCity;
     private Handler mHandler;
     private ViewPager mGallery;
     private boolean isPaused;
     private Runnable mRunnable;
+    private SharedPreferences mSharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_city_details);
-        setupToolBar();
+        setToolBar();
         setToolBarUpButton();
-        mCityName = (TextView) findViewById(R.id.city_details_name);
+        mCityNameView = (TextView) findViewById(R.id.city_details_name);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
-            isFavorite = savedInstanceState.getBoolean(CURRENT_FAVORITE_STATE);
         } else {
             if (getIntent().hasExtra(CityAdapter.EXTRA_CITY)) {
                 mCurrentCity = getIntent().getParcelableExtra(CityAdapter.EXTRA_CITY);
@@ -56,9 +58,20 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
+
+        mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         mHandler = new Handler();
-        updateUI();
-        setupAutoScroll();
+        setCityNameAndImages();
+        setAutoScroll();
+    }
+
+    private boolean readIsFavorite() {
+        boolean isFavorite = false;
+        if (mCurrentCity != null && mSharedPreferences.contains(KET_FAVORITE_CITIES)) {
+            Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
+            isFavorite = favoriteCities.contains(mCurrentCity.getName());
+        }
+        return isFavorite;
     }
 
     private void autoScrollGallery() {
@@ -71,7 +84,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mGallery.setCurrentItem(index, true);
     }
 
-    private void updateUI() {
+    private void setCityNameAndImages() {
         if (mCurrentCity != null) {
             setCityName(mCurrentCity.getName());
             setGallery(mockACity("Beijing").getImages());
@@ -83,7 +96,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mGallery.setAdapter(new CustomGalleryPagerAdapter(this, imageUrls));
     }
 
-    private void setupAutoScroll() {
+    private void setAutoScroll() {
         mRunnable = new Runnable() {
             @Override
             public void run() {
@@ -113,21 +126,19 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
 
-    private void setupToolBar() {
+    private void setToolBar() {
         setSupportActionBar((Toolbar) findViewById(R.id.city_details_toolbar));
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(CURRENT_CITY, mCurrentCity);
-        outState.putBoolean(CURRENT_FAVORITE_STATE, isFavorite);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         isPaused = false;
     }
 
@@ -139,44 +150,42 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.actionbar_city_details, menu);
+        boolean isFavorite = readIsFavorite();
         if (isFavorite) {
             menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_black_24dp);
         } else {
             menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_24dp);
         }
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-
             case R.id.action_favorite:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
-                isFavorite = !isFavorite;
+                boolean isFavorite = !readIsFavorite();
+                writeFavorite(isFavorite);
                 if (isFavorite) {
                     item.setIcon(R.drawable.ic_favorite_black_24dp);
                 } else {
                     item.setIcon(R.drawable.ic_favorite_white_24dp);
                 }
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
+    }
+
+    private void writeFavorite(boolean isFavorite) {
+        Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
+        if (isFavorite) {
+            favoriteCities.add(mCurrentCity.getName());
+        } else {
+            favoriteCities.remove(mCurrentCity.getName());
+        }
+        mSharedPreferences.edit().putStringSet(KET_FAVORITE_CITIES, favoriteCities).apply();
     }
 
     private void callPlaceAutocompleteActivityIntent() {
@@ -201,7 +210,8 @@ public class CityDetailActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 mCurrentCity = mockACity(place.getName().toString());
-                updateUI();
+                setCityNameAndImages();
+                invalidateOptionsMenu();
             } else {
                 finish();
             }
@@ -210,6 +220,6 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private void setCityName(String name) {
         getSupportActionBar().setTitle(name);
-        mCityName.setText(name);
+        mCityNameView.setText(name);
     }
 }
