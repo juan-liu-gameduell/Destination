@@ -3,7 +3,6 @@ package com.liujuan.destination;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +20,6 @@ import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.model.City;
 
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 /**
@@ -38,30 +36,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private Handler mHandler;
     private ViewPager mGallery;
     private boolean isPaused;
-
-    private static class MyHandler extends Handler {
-        WeakReference<CityDetailActivity> mCityDetailActivityWeakReference;
-
-        private MyHandler(CityDetailActivity activity) {
-            mCityDetailActivityWeakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            CityDetailActivity cityDetailActivity = mCityDetailActivityWeakReference.get();
-            if (cityDetailActivity != null) {
-                switch (msg.what) {
-                    case WHAT_UPDATE_GALLERY:
-                        cityDetailActivity.autoScrollGallery();
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-        }
-    }
+    private Runnable mRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +56,9 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
-        mHandler = new MyHandler(this);
+        mHandler = new Handler();
         updateUI();
+        setupAutoScroll();
     }
 
     private void autoScrollGallery() {
@@ -105,27 +81,21 @@ public class CityDetailActivity extends AppCompatActivity {
     private void setGallery(ArrayList<String> imageUrls) {
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
         mGallery.setAdapter(new CustomGalleryPagerAdapter(this, imageUrls));
+    }
 
-        Thread thread = new Thread(new Runnable() {
+    private void setupAutoScroll() {
+        mRunnable = new Runnable() {
             @Override
             public void run() {
-                while (!CityDetailActivity.this.isFinishing()) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-
-                    }
-                    if (!isPaused) {
-                        Message msg = mHandler.obtainMessage();
-                        msg.what = WHAT_UPDATE_GALLERY;
-                        mHandler.sendMessage(msg);
-                    }
+                if (!isPaused) {
+                    autoScrollGallery();
                 }
-
+                if (!CityDetailActivity.this.isFinishing()) {
+                    mHandler.postDelayed(mRunnable, 1000);
+                }
             }
-        });
-        thread.start();
-
+        };
+        mHandler.postDelayed(mRunnable, 1000);
     }
 
     private City mockACity(String name) {
