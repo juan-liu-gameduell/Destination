@@ -3,6 +3,9 @@ package com.liujuan.destination;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
@@ -21,9 +24,18 @@ import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.model.City;
+import com.liujuan.destination.model.PointOfInterest;
+import com.liujuan.destination.parser.PointOfInterestJsonParser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -33,6 +45,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
     public static final String CURRENT_CITY = "currentCity";
     public static final String KET_FAVORITE_CITIES = "Favorite cities";
+    private static final String TAG = "CityDetailActivity";
     private TextView mCityNameView;
     private City mCurrentCity;
     private Handler mHandler;
@@ -63,6 +76,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mHandler = new Handler();
         setCityNameAndImages();
         setAutoScroll();
+        loadDataFromInterNet("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.503186,-0.126446&radius=5000&type=point_of_interest&key=" + "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98");
     }
 
     private boolean readIsFavorite() {
@@ -222,4 +236,81 @@ public class CityDetailActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(name);
         mCityNameView.setText(name);
     }
+
+
+    public boolean isOnline() {
+        ConnectivityManager connectivityManager = (ConnectivityManager)
+                getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
+        return (info != null && info.isConnected());
+    }
+
+    public void loadDataFromInterNet(String url) {
+        if (isOnline()) {
+            new DownloadTask().execute(url);
+        } else {
+            Log.i("---------", "no network");
+        }
+
+    }
+
+    private class DownloadTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            return downloadUrl(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            mCityNameView.setText(s);
+            List<PointOfInterest> list = new PointOfInterestJsonParser(s).getPointsOfInterest();
+            for (PointOfInterest p : list) {
+                Log.i("======", p.toString());
+            }
+        }
+    }
+
+    private String downloadUrl(String myUrl) {
+        InputStream in = null;
+        try {
+            URL url = new URL(myUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setReadTimeout(10000);
+            connection.setConnectTimeout(15000);
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            Log.d("------", "the response is : " + responseCode);
+
+            in = connection.getInputStream();
+            String contentAsString = readIn(in, 10000);
+            return contentAsString;
+        } catch (Exception e) {
+            Log.e(TAG, "error happened when downloading URL:" + myUrl + ", error:" + e.getMessage());
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    public String readIn(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        byte[] buffer = new byte[1024];
+        int length;
+        while ((length = stream.read(buffer)) != -1) {
+            result.write(buffer, 0, length);
+        }
+        return result.toString("UTF-8");
+    }
+
+
 }
