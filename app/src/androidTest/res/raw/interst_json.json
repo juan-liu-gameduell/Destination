@@ -1,0 +1,807 @@
+{
+  "html_attributions" : [],
+  "next_page_token" : "CpQCDgEAAKmCdsAUYeA8nBUwxRwLCluS3rZZ_EBlRJwixw0sz-5aO8Pj38ONU_jzoXYoBUuJqNsXC5xivkr0nq2kIxWMyk8HncQEIvliQ8IrTHhrK5Wro9C3SqP5AJrrWjxhNZFjKYD_sGoQjbNdMx_8Xrierzk0HY8-zmrNLJX-MvjNDcG0uFk3JjAO97iJM8wL7h6f9tCBi_-0h7uSgzx5OmOQa7Ce6Hg15UH1O6227rKiTFSYSFMDYv4D_oPmw7D2Ryw7uBe3CJhixEKNNoR467ic2my2T3_NTRzCJ-1RVqGQLJBGiMjSMgk_eb3tAPxy8wezh5oGYFvxESx_V8OyrWwpvkFkgiMkUoDdxA7Chbze6iPMEhBWv5wO6FIhoQlzXxx-nwHyGhSB-TRd4FfBq2XjEA93e6s4Brg81w",
+  "results" : [
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5023115,
+          "lng" : 13.3954469
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50259155,
+            "lng" : 13.39577705
+          },
+          "southwest" : {
+            "lat" : 52.50221814999999,
+            "lng" : 13.39445645
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+      "id" : "03883cc5fde94b26f01ad340404e16549b296da6",
+      "name" : "Jewish Museum Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1365,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/106459668444231805000/photos\"\u003egri su\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAALSSNPzgVNIlRNrS0_CbZVrQ-V2MSUDAkivQ0lkNoF-WdsnORDranAu19298R6GqAd7exzYwDpvpjIlSUXtlPXria710OOHy-kypAHuyO7VnymWOphikdR-c48iPb4An5ZczHgixxjhcNaNyKie2dkjQUEDrIbU_bSuSt7zDB3ndEhAxwCx-BR618vj0ifFQ1IAPGhRplxcrYGogVmuT4r8rLysZidaJRg",
+          "width" : 2048
+        }
+      ],
+      "place_id" : "ChIJ-UrRPdVRqEcRTzDm7VTSLEw",
+      "rating" : 4.3,
+      "reference" : "CnRnAAAA4XvAhJYYmGz9pI7fUnHBBkg4SI99mCEHmjcvJhWmtog9VJqvuQslyV_-bKdyfrWvrSz0mezEXRvObl6xfIunm8Szozc1zd6WQrFpeSPDleRDyRyvqNwheYs57Ef49Vn07m0DCz7r3mGWKLDZscZ63xIQx-t7ypLKaw9a_xYGeo1GpBoUeJksz1zxInlvGlMFTy7RyAfAeA8",
+      "scope" : "GOOGLE",
+      "types" : [ "museum", "point_of_interest", "establishment" ],
+      "vicinity" : "Lindenstraße 9-14, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5069272,
+          "lng" : 13.3454681
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5070539,
+            "lng" : 13.3457834
+          },
+          "southwest" : {
+            "lat" : 52.50654709999998,
+            "lng" : 13.345363
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "883ff60bd22bc874a28217d50710d2f962f982cc",
+      "name" : "InterContinental Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 2698,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/106118672085941321381/photos\"\u003eInterContinental Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAO2obGDYQHuNlsTfaIc7O4YEewIkwl3KloWWQTiTjKJdBikK6SFhTiwlnQMcZiKa902Yo81cTYpBFyYAnTHf6YutxS2bubVAeEa1ahydM_crduuTOcyI2DnWHnN1ujbQRzAg9eFdxX65IBM-2xuQXnc4MzSWIfi_SgauTry2RScIEhAJrK131T0gy_yfj0qu0J3FGhSx4RB_lfHwhUgKZmxf3sfZEMLt5A",
+          "width" : 4054
+        }
+      ],
+      "place_id" : "ChIJF6VjuqxRqEcRfShAqTgDfkU",
+      "rating" : 4.6,
+      "reference" : "CnRqAAAADdpSXGaLveop40Ets292Soc3Ed-IE9gJQVVgDI3Y_0BrfzmXIqfEdzqP9Q7wBOcwtVhMVi4yv9jNl0VGkEO8FVmzv7g2kE9WCPQ3kZhUvv-YMrA4lI4tAdJvLD97y2PUgjFU17cw6Rl3wzyQByK8lxIQrG7mYR3BG6jikFOuEzMZ7BoURz4xaoqbRMKcNicR65ISUzLm6Lw",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Budapester Straße 2, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.51095369999999,
+          "lng" : 13.3763962
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.51101425,
+            "lng" : 13.3767138
+          },
+          "southwest" : {
+            "lat" : 52.51077205000001,
+            "lng" : 13.3754434
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "68740482069973ac5dbafb0b87c186e0e0817130",
+      "name" : "Berlin Marriott Hotel",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1623,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/109510705965937171565/photos\"\u003eBerlin Marriott Hotel\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAL43GIfzwzTBkS4y4N5gumlGHfOwJ9UNHqPyr0HZ994dLv-kwgCxgNhs6ciXI7XBVND_7v_S9ts4kyhFIvvTgWYUYa0W0jHJv6JrrO_2mFaC2QurX5gE02zc_vHS6SIIth4EMwb37fM5Ne3UbCgEiTYTVViYwXVa-ZYKrrhvhX5HEhBDn-_UGdez5MMA-5vfg67UGhTw9QjnmJpJVrBnoWRSemlAficFFA",
+          "width" : 1622
+        }
+      ],
+      "place_id" : "ChIJX-1THMlRqEcRLR_hDVVnW9s",
+      "rating" : 4.5,
+      "reference" : "CnRpAAAAgeJMAaDNJz9HZoIAMs8r1cjWPhn1PzYhJqLrs-Acu8aLFdgCavQdEQNQb0f-4d_FqRBLFqEIXR7mMu7r_bLJqhDy1Du1OOkdJRJ1LIlA8DmjV07_A_SH5oJPoXh2l1FKJbORBVbQH1lKeoQUpGSe4RIQGz7Gq-ZVwGZn0-2XCpfTXhoUWqeo_mxwfMxO4DjMZldhNvHqNmM",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "restaurant", "food", "point_of_interest", "establishment" ],
+      "vicinity" : "Inge-Beisheim-Platz 1, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.50561399999999,
+          "lng" : 13.332913
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50589375000001,
+            "lng" : 13.33324885
+          },
+          "southwest" : {
+            "lat" : 52.50552075,
+            "lng" : 13.33280105
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "e3db076d21ce2c9377a4e9c0571b772fa92952bc",
+      "name" : "Waldorf Astoria Berlin",
+      "photos" : [
+        {
+          "height" : 2048,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/103787726043336290948/photos\"\u003eWaldorf Astoria Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAAG5oxRASGzSYEXh5wsrk6LWHpJ14B_x8wSZ-gWUK0EGYKnA9lqY0cTSZBUBgCdULlfwT9ztQkkimW0d_TiB_QJng9UeTYixV2WqwDdJjC1DuoI1HD1VXKYV2k1fyu4MYLgvEs8P9ni4f1bS1EIORcRu4qymXOy2Ph4Md9lDRd6sXEhDPObLivYdWDOVHZquEh2t4GhR1-fvYDJQDIQqjpRur_YFr4riUYg",
+          "width" : 1441
+        }
+      ],
+      "place_id" : "ChIJ_TKEVP5QqEcRld4HgkH6amw",
+      "rating" : 4.6,
+      "reference" : "CnRpAAAAN_mAEOkngKiVPvt0EV968fZrU_L8EpRivYXrB-lBiyY7b4DV_jTl5R4U2RikH5Ku8vMpsOUK5SP-AknqOFm-2F8aJZmuuyzqY2TcQtFvmpkE3UXk3l1Z6gaOyWR-6cQsf26O_rYTbduZMDYn9YYoVRIQTBK5cVx3JRfM26PfaaeCLRoUHU7LUfwFWD1CoWFBtJF05KI-HQc",
+      "scope" : "GOOGLE",
+      "types" : [ "spa", "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Hardenbergstraße 28, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5101204,
+          "lng" : 13.3753109
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5101671,
+            "lng" : 13.3756403
+          },
+          "southwest" : {
+            "lat" : 52.50998030000001,
+            "lng" : 13.3752011
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "9210846507351758096680016dae1f8888331b12",
+      "name" : "The Ritz-Carlton, Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1600,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/110250919992315497958/photos\"\u003eGunther H.G. Geick\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAAO2hYK-P4sGZr-a81fMOARbL9PD9aqUMrMqvLQmtziFj1OLOyRFwKEr9xLfEUlXBJYbFQ0IrWGdy4_vs6UUW6usgbQp9nhbZCvl8fk24_iWECoKVLqioXXZwX5zWM8CTVB7-h13yTPFRr5RHNNklXYZK_ERXQknA4HCWs2aE_ggrEhA62PCjU9ZymhuX8CRafmKHGhQ8nRUzNeriZdRy98n44BymgkRcSQ",
+          "width" : 900
+        }
+      ],
+      "place_id" : "ChIJDcQdDslRqEcRPfEx1bivOaQ",
+      "price_level" : 4,
+      "rating" : 4.6,
+      "reference" : "CnRsAAAAVsqCKgJNyStz5L-XRUTUnXr4zUDAIvaX7w3q3A699J2YdMbmadfO4H31Ot4FJT00Mk8jj9XbA1LqhQXwDHMtzrRNAA57MxMqLPvW0NJayW3rJyZ2vU23NErbkfAlLzxUYUtUwL_MSMzHDIcMWC2l5RIQRbOmizjrWETzGDHGUiWZqhoUlQlyznmHvOKRiEGFfIQKZYrDPuM",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Potsdamer Platz 3, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5030606,
+          "lng" : 13.3319431
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50309165,
+            "lng" : 13.3321149
+          },
+          "southwest" : {
+            "lat" : 52.50296744999999,
+            "lng" : 13.3314277
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "1c24bda8b1300656aa62ae2e9a78dbb505a79014",
+      "name" : "Swissôtel Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 2736,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/100726982737897863027/photos\"\u003eAyyagari Srikanth\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAACNWKYgBUUMrJH8oOcPTHKGE-Lad2qzYt26XFR5RSQroyDzDdOMibTBHmSBjnAzwKZVWA4Ppyn9FZTG2OpvUk4lEZmBc4spKzHcyEr2jrJdCPKcXzzZhf_XNPqI94kMGqyMaTm5tjjh-tVm9bRvy0rpNdPbzcLUSFa4q3eWf7ALWEhAYLWx0q0tEVrabkwWhXB1hGhRzDfFr8iXsQhh2vjyuLNR27NQjGw",
+          "width" : 3648
+        }
+      ],
+      "place_id" : "ChIJHVo50f5QqEcRRWv4pxd0Eoc",
+      "rating" : 4.4,
+      "reference" : "CnRlAAAA7-wbWojAIwsIatA_r1F6ke23QiZs6wgSGnlYidCbJxxomxhNbMU0IiFVIdmZgQ1wGRpU_II4_wSyefYd64FmPsvBDTV7Uv27r4n51h6Uo5YYWFJe28XBeycE3h55N4feBjljHyIlKjkPYq9f1gL7jhIQgccuv7g4i4SzlvTm72opTBoUzRZf4T_fH6aa2om9nCFbIpMLSEI",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Augsburger Straße 44, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5038302,
+          "lng" : 13.3803192
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50390475,
+            "lng" : 13.380699
+          },
+          "southwest" : {
+            "lat" : 52.50360654999999,
+            "lng" : 13.3801926
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "5fdd2ef114ebf702e4440b34ff216ee057db9007",
+      "name" : "Mövenpick Hotel Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 490,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/104670295030414140728/photos\"\u003eMövenpick Hotel Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAALFbAqTjnpa7ojKxdPnrNUNGTemErGuAhvKlqF0oN6Gmanja_I2piJnr5GuDnT6Inbs6C2-0IAuzg_l5u4p2lqdh371a4-fAkxF8bwt5hYUJYfdyVL4LK2P8w2vTcMvP_cCySRAwnI_cLtJmUVhxYX3QtFcX47NpsK8-o3cmBhOdEhAYZl84YZUyhbagmBYtdoazGhSbvrFM3awCNH71TMZt-BnsF6hFmw",
+          "width" : 491
+        }
+      ],
+      "place_id" : "ChIJrS9fEc1RqEcRKQgeB6Kh0OU",
+      "rating" : 4.4,
+      "reference" : "CnRrAAAAJI1CodKSvNP4U6AR-qOFCxHi9K1AwUcay9HP6awsx-J_SbEf1Fcs9NA60vYLLL9H6R7D2H3Ti90CO1djywcu7aURQQ_EkgKWFBW3m7FIr8XGy4WkM17OxZnPORw7ljZJZ3vOBnSCXp9jef8GpH62YBIQ41keZwLNTROgdGngp66T4RoUcIsMBoC-AnsWiEbwyqSg_0RKipU",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Schöneberger Straße 3, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5194188,
+          "lng" : 13.4029591
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.51949895000001,
+            "lng" : 13.40353315
+          },
+          "southwest" : {
+            "lat" : 52.51917835,
+            "lng" : 13.40276775
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "73cdf37e1b1e6259081acd57c24da72fff6fceb7",
+      "name" : "Radisson Blu Hotel, Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 685,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/114956845246193678600/photos\"\u003eRadisson Blu Hotel, Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAAACY8YI_AglDWvLY6LgigV8xvxqEDUlP07Zme_sPo0nMJSWsGYvwk9njtsZkAt4D6xxxFH9se1JXeBp3HG_7ErNafe2NinEpAKbTQj8QmDTyoQWExoHsV1RG7GvRqGCHkj2FT0l-Xs2aZaBFiUSG7gscyRCJItAihUeJ1DU13N6QEhDHupIXLndyj_34L3kA8ZmVGhRWdmGEZJD4PuwJuuit38mSRyTSbA",
+          "width" : 1024
+        }
+      ],
+      "place_id" : "ChIJLTX2ud9RqEcRtiblhC9s3Rg",
+      "rating" : 4.4,
+      "reference" : "CnRtAAAAPeYWBrH_mn3iMAoKuUOkZpf3OEYkZGCujcYK-44CKX0f9mrH4zOsdxy0cB1KtOmgAwDQcDt_xRFqjXhVb5Cpbx6Bq9N6vP-ijQoixHBmSgPOJZ4vuipD6Gtyyx4eazKNu9fomRlycFbRHmsxNV3YBRIQyxjFCyx50sjn3A4OfgFQ4RoUjYPbJ7ANyd9zu80rKSQUV-4chjU",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Karl-Liebknecht-Straße 3, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.4978612,
+          "lng" : 13.4537728
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.49809149999999,
+            "lng" : 13.45396865
+          },
+          "southwest" : {
+            "lat" : 52.4971703,
+            "lng" : 13.45318525
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/bar-71.png",
+      "id" : "1cb3b055b087d88f8083e6bea18b374350f8fe0e",
+      "name" : "Badeschiff",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 2160,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/117582623992437143369/photos\"\u003eOlivier LHOMME\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAFVLDiJGT2I45hcG2i0P_J0wuY4PDGjvBjz7Erk_aZ8Pmb259wirb3JbUkO8iwH5BIkiPSbdXxSx-mtWd5bPJ3hhCI5P2rSaJdXnR8QnJ8eOlvBKH6z-M4oxYp4R1dkWMm4aMRgtoNVzchNMUwzoWm-axkRmYDfOyljFZevl1DbTEhDVC6_DiQm3f-Z5-1BUHjdbGhRktj_8oj6XnJ9MW2DeNhxbH0QNhg",
+          "width" : 3840
+        }
+      ],
+      "place_id" : "ChIJ2Sf5s1VOqEcRyNL6T02APR0",
+      "rating" : 4,
+      "reference" : "CmRdAAAA-pGRjt9DlH8ROcCHmWYIY0CVbaXg3KARF-nj1FuvJDU06dlwYroKu6G9cpL7LLY3wxoryowTPcOgoF6byFrcwV5_GAeI0OeBAQWju6IO8c9IrDt0-mtd6sXfydrJ9PONEhBPkoFy6nlY0pcMxWzzYFr1GhT6GHjZ13KQn7NjJM3KqXSDzPiiWA",
+      "scope" : "GOOGLE",
+      "types" : [ "bar", "point_of_interest", "establishment" ],
+      "vicinity" : "Eichenstraße 4, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5082811,
+          "lng" : 13.3725554
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5085946,
+            "lng" : 13.37282
+          },
+          "southwest" : {
+            "lat" : 52.5073406,
+            "lng" : 13.3724672
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "c40d4e589041b402d01e61513bfc3d1be9a81773",
+      "name" : "Grand Hyatt Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1600,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/108329663363065182423/photos\"\u003eHeinz-Juergen Manier\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAANeGkfm11qn5td3cQFJcvIpG71KbM85NYZzR72tn2wjBGulZ6pO6YHVfjHkBSz4GoJioLcqPsmsFrPug36v0BD4Rl0gho_DaRjMF2L548Uw9mpQ-EdheMJ1AUCG79ah8iQxNOGJCxy2IWSsMc5kB6PELjceTaMZ1x0cfK5Oyi_teEhCkXBvPyr02Q8yw4g2MI-8_GhSIctPcJ6s0XNGVDrzJ7W2kVV5Bfw",
+          "width" : 1200
+        }
+      ],
+      "place_id" : "ChIJTYcTLspRqEcRhPC8FM17zrA",
+      "rating" : 4.6,
+      "reference" : "CnRmAAAAfZWhXcclXSwoZVs2K05p3PEjNPvvcOtCYh4xZ3bRRNwwXHYa9V0oEvpvhFZEMdlRxNIR8lC2Tfh_P1QSgYsY5wmRPHzjuJwUFTUQgNaaXJbhCp8AOM9vN2Ruxn0Q_kkCli5_0rk1vCwDHwmkWK1UThIQ34qR-1xT3e0wNREthGPjDxoUer8YjmHwnkUqC8YJ6PyRfnl3uS4",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Marlene-Dietrich-Platz 2, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.53505209999999,
+          "lng" : 13.3901898
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5407943,
+            "lng" : 13.4004726
+          },
+          "southwest" : {
+            "lat" : 52.5301535,
+            "lng" : 13.3826962
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_recreational-71.png",
+      "id" : "167f1fd0d83206d0bfc59745415e69508864c7d5",
+      "name" : "Berlin Wall Memorial",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1200,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/102876357258252670925/photos\"\u003eHervé Charabani\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAMFpGWc5RCvJ-6_Hfd1_N6nHFr7cvd6nKI41-tXcBTQbYvKxbiAPsBC2ycrC1ROi2WPrmfSxQBWHHbdQM-IDEKzCoorKQEwP6aQU4E9ghJsl8axPiPC8K8ROYnB7U5LhyQ5UHes55cfcND7UfImlsKCQVciJk-e_0x1l4_bTEEJaEhD5nOjlLRNCY3CuLfwLT5TXGhRyJfcpN3gpbbF0FHwB5Q-0n9xL-g",
+          "width" : 1600
+        }
+      ],
+      "place_id" : "ChIJZ0KxF_JRqEcRrLHB-4r-U-o",
+      "rating" : 4.3,
+      "reference" : "CnRoAAAAG0MjIcW7Jj1sg7Cm05TEB6fHOlPCDPhQwAF3QVh7T_Vn6Z7xRVY-ltIeusmOebPYSCQN8SP_wYLtzmFPQ06QnZ4VvhObCcL-AKU0S7YJOmNCuKW9ba2y2Dw5npekqB1bjwcZMYZa4SbtxwPtMdlyzxIQtvZM4npHF9E7LqfykPTj1BoU7T24ql7919geqNLss3BeJ51YCwg",
+      "scope" : "GOOGLE",
+      "types" : [ "park", "museum", "point_of_interest", "establishment" ],
+      "vicinity" : "Bernauer Straße 111, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.50366150000001,
+          "lng" : 13.3716751
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5036929,
+            "lng" : 13.371718
+          },
+          "southwest" : {
+            "lat" : 52.50359609999998,
+            "lng" : 13.3715856
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id" : "0145742dd198a2bcffcd8c169a0f4fe8deca7df1",
+      "name" : "Berlin Convention Office",
+      "photos" : [
+        {
+          "height" : 453,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/106072579172747762029/photos\"\u003eBerlin Convention Office\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAAAIMaWU-yjlJjbZT7X_RuOAzgOVPyhxwicMQ1KsLI2fGGkBC1eOzQUx2IXVVtI4x9FE2_TKUDbLYTPNR6BtpRGj6UoZHN3AqdqpttscYBpPd2LmP1CFfMH2cXI-m5p64kmv7e3DW3GIg4NWW8O7GKLMmvw1RcRs2K9Xg3iaWNUq3EhCWZOYAtaS-IKLkY2NFILvZGhTN7wWVukKNc4v_8Vxb2eG4W09pxw",
+          "width" : 1000
+        }
+      ],
+      "place_id" : "ChIJp-KJK8tRqEcRWDtDfADPs0Q",
+      "reference" : "CnRrAAAAA1eFdhLMwS56qZJOO6ZkH5Dk4CDk3AjMHsrETZDaeQm_ExSooSLmYWC-a4rNNH1gHOChn6b24sGdKW5_FE1FonjPFKYCoNNUWWTxALGPUivzTUDGaTBKb5iI9WMMqQUTiR4-p1hIeXssXSWG4fiibhIQacvgMokkKze6-9OCFSt9yhoU_tasf3NoijH0yFC85zB6mqQUuLw",
+      "scope" : "GOOGLE",
+      "types" : [ "point_of_interest", "establishment" ],
+      "vicinity" : "Am Karlsbad 11, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.52086,
+          "lng" : 13.4093
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5212392,
+            "lng" : 13.4093729
+          },
+          "southwest" : {
+            "lat" : 52.5207336,
+            "lng" : 13.4092533
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id" : "3d502b31651d73406f97a4581e5e578533648846",
+      "name" : "Berlin Tourist Info im Fernsehturm",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 638,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/108527219432439023789/photos\"\u003eBerlin Tourist Info im Fernsehturm\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAN3fPUwGUrsXx2O_8q2aeA5RhF3eRtVst7reQNaatr97hUJNsjdCFP6rkPCN9ifyCemVzuoSbqSNLiGVdt5SyP5C6ModaCP60RWSmQ8jBCITr9Y5W5aM9kbdsTgPzkZN1KVd-LFsPz0MWuFiWmbXYjeDm2Cw5XJSOeeo47BfQqapEhCIKi9MS3Fi7exaPR7m6iMtGhSwRnfniZwxXXkkg0C0XEkeLtHRFw",
+          "width" : 638
+        }
+      ],
+      "place_id" : "ChIJpR7mUMZRqEcR1S9nrNq48_U",
+      "rating" : 4.5,
+      "reference" : "CoQBdgAAABYPe4TnpIFL7nshT2nEz18Av3qEciXDa-aw-YgvBkpxgizGQj2DeRgL4eLpTf8_fRmImYRP1QDmhZZs-7TlTLMm5qXCPGDFuA60uU9Km5KzObgvPjyKXwY-K12g7FLt3Pc-HZef5QO7CplR7TiOWUYpihaHpmDoBVWcwZ0I92I8EhC5dUPQ4MWGsCgogbbeSVRRGhRazdISqGPCASKwMOXmIDPc6CK-6g",
+      "scope" : "GOOGLE",
+      "types" : [ "travel_agency", "point_of_interest", "establishment" ],
+      "vicinity" : "Panoramastraße 1A, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5035567,
+          "lng" : 13.4486976
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5036185,
+            "lng" : 13.44875585
+          },
+          "southwest" : {
+            "lat" : 52.5035361,
+            "lng" : 13.44852285
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "6071c6bb389c65b9a1fa06bce263fefd4791182b",
+      "name" : "Plus Berlin",
+      "photos" : [
+        {
+          "height" : 3264,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/101089241907684920094/photos\"\u003eAxel Belinga\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAGGJiBQoNRamfPTHXMNRZtfvuZzWtLubveA92n7DKELymwJ_qjKd8n-Q73v7w_By07QDCLSkz0WWH0R3UmqUlteANzIg-Wkv70xk2Fc--XMk-YOKeb5xvcENlWpKBOXhh4GH2t5-D0rFz7alCMyzqa92UAFsPkx1PmlVJdhoD7aOEhBYeCcc-1mEMPJ5kHwGUWlgGhRbOiItDecxmvhzUqyHoCmY_7uwkg",
+          "width" : 1836
+        }
+      ],
+      "place_id" : "ChIJ05G_9FBOqEcRh-2Vg4lGscQ",
+      "rating" : 4.2,
+      "reference" : "CmRfAAAAY4IY9CdsHgJqK5TjoF22yCqQOuQ8HTV3t1xmtrz7JIQKkvzRLL5Z5b7Ij8P35q5_HDRoMP6O5ZL_E94EbP2k4W7KfV6bK5O90D_d67Gg3uVE6CDzZkNfnfjHIZKkpNE0EhCf0Dij_yGT1P9JqJReHN8NGhSySOEjwFIvBLzZnkgX17TOZx9xnQ",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Warschauer Platz 6, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5079196,
+          "lng" : 13.3377546
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50981409999999,
+            "lng" : 13.34273935
+          },
+          "southwest" : {
+            "lat" : 52.50389810000001,
+            "lng" : 13.33189195
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id" : "63054a42e42879c3b17e1819bc86b79b58fd27b9",
+      "name" : "Zoo Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1335,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/115625056886314082092/photos\"\u003eGlyn Lowe Photoworks\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAIC-mFR5Uf0qoU9JdF0asFaLoYNm57R_0ZKZwzQ9fHZqqIhakpMjrhjZ0509uX_uUHoyI5mCY_q7nkuQ_lRPrPY5SUO90qAhoK8eKc0Gb4juPeFWrjEe0IIhptunkzLTNb5XwgYEnvCXQ6HcvsYwAf_XPH4HCnMIhW0VXOV2VqTcEhBfKwSplBn2nB36CG_w8EyrGhRX8gi5lMrZvDWpE80Sn1PdJZ8vMg",
+          "width" : 2000
+        }
+      ],
+      "place_id" : "ChIJaW_IvapRqEcRfq6A6TrrOYE",
+      "rating" : 4.3,
+      "reference" : "CmReAAAAu9VOgn6rWD3I6sSZyom0xRX5Dx1AM-B6TaWz-90y8H8PgApfiPnEQu-jxL_cNzP0lv9EEafXq99aR8uY29gH8FZDSmL44-amnB58rg_5Nw4j8xw1QEeq0yQSLiyC7KVyEhBIEOc6xevbEU2nnQLZt4g7GhS-03saJu-rPYkN_WkvcTg9U2XfYA",
+      "scope" : "GOOGLE",
+      "types" : [ "zoo", "point_of_interest", "establishment" ],
+      "vicinity" : "Hardenbergplatz 8, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5276083,
+          "lng" : 13.4156809
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.5277437,
+            "lng" : 13.4158655
+          },
+          "southwest" : {
+            "lat" : 52.52720209999998,
+            "lng" : 13.4151271
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "670d6db02d3aebef503c213017898230b8dde584",
+      "name" : "Soho House Berlin",
+      "photos" : [
+        {
+          "height" : 3545,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/108056995986958526805/photos\"\u003eDominic Hofer\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBcwAAABXwtbnipMYtZKAOiTGEh1EEMNM4qK-qD8G06H_GEvl4Omb1LmnLbXxf0Rr4gZRRhsSY6L5lMhMPETaSwZoKYusAMAD3vzNUt9cxLUw1XKWWdy-ltWvxL6Dq671aGXwR5kL5CHTEtXqcOMu0lMLrcSfj9eECNUgDCy8P1nv7WzhVEhAOjiNZJuLFFR83_1iDajI-GhSiiktCmjAB6f0cDd2b48pcIGRcyw",
+          "width" : 4880
+        }
+      ],
+      "place_id" : "ChIJ7QGeQxxOqEcRFvDmifxqZO8",
+      "rating" : 4.3,
+      "reference" : "CnRlAAAAbZQanwLvm29zYEZQpyKxx5SmI42LNMOjmG_hoDFX2aPvCf7ZkE1ItcmqYwhA1mQFUcGHJXXQJ6_xVq2ETgfF7iy1BKfNsgeE_uPEzHyXLC-47Qjd4LgNTF3wDlSuIG_DSJYhopPcCfhgJ0zqiK6fJhIQrgfrRxLP0stXmVg70-qgMBoUX8FxJNV_YSj9S-MyyH3kt6jEFvM",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Torstraße 1, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.503887,
+          "lng" : 13.352339
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.50410375,
+            "lng" : 13.35243185000001
+          },
+          "southwest" : {
+            "lat" : 52.50381475,
+            "lng" : 13.35230804999999
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "501a23d8f991376d74241367caa72b00cc647de6",
+      "name" : "Hotel Berlin, Berlin",
+      "photos" : [
+        {
+          "height" : 1067,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/117181548694016896298/photos\"\u003eHotel Berlin, Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAMRXpeypqJf9J3tUTJKyanzYCxw6515jSlsavpJEr40UWeyEaqsA_UIPRDzKvHljdlAwHecpsD_3_qONHkHB_lOyXQA--GoNjVvYH1YZuaWXgusT-UyDWwh7hD-paO1JAN8V3rPLKi5jru3bfA_vArmpnCz7SPCqZjuT1JANy0pHEhCuDJpleEK_aNpPm8fC5aT8GhTJyURNdUfDKK27RXzkafVNEv1bsg",
+          "width" : 1600
+        }
+      ],
+      "place_id" : "ChIJ42MzYk1QqEcRhlX0r_-WtI8",
+      "rating" : 4,
+      "reference" : "CnRoAAAAYO65rPI18xcGzBj1LyVfeGHAXL_zpiojVGfVA6ariXNzUrvOKp6b3t3q3R7gTSdnWdj01Cvwt25Di2oYQCEpuyipMOB0SV_5C-xPjyCaUO_SaPD_7EIhXlpOx33zNN4bYnBT3OnWBS0_NdPMtB1K5BIQIPJKKLrX4MVg9iTSZ6RSKhoUyBVRlvL1EUYnBsJP0fhLW4vUPc0",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "restaurant", "food", "point_of_interest", "establishment" ],
+      "vicinity" : "Lützowplatz 17, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.524911,
+          "lng" : 13.369492
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.52537255000001,
+            "lng" : 13.3701284
+          },
+          "southwest" : {
+            "lat" : 52.52475714999999,
+            "lng" : 13.3675828
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/generic_business-71.png",
+      "id" : "4d10adacb61fe23c0f00e3bffbc70cbf011c3f17",
+      "name" : "Berlin Tourist Info im Hauptbahnhof",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 853,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/103358339805769401535/photos\"\u003eBerlin Tourist Info im Hauptbahnhof\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAGp9iX2ivXi-ztnPbj58AoP-uPKv0iOn6tlE4kxqUg_nAlT9_fhdWwHzJ6VEMsDomQ0BFtrGbPSvgqRLDcDCZvLbTOmWvRNYMEpeIv3uvu4UlYKvPoYdPQpnHaqVd6CtSOYAhNct7JvJVfMEW4GasOgQu_Dy_MMIc4nwIiiF2wpNEhAl-I4xSdnZRlSUg2Eo3_UHGhTswp3nJ1VZsgQeytgUViYsFtr_kg",
+          "width" : 855
+        }
+      ],
+      "place_id" : "ChIJ_RCb9L1RqEcRnGol_W1fBO4",
+      "rating" : 3.6,
+      "reference" : "CoQBdwAAAH6t6KKw15RyzEclHFTJ331UzPJayqh-BvZne4c7Jztp3xftyzjNA4U0dApdvVBafs6H5VFmdHkp2edrKvG1avVfRaIhHWBExKg6vZ4U-5Qz1Mlv6_USZXbeu5v8ITz3guW9LqoCcgHDE1zWZvLAWNz2qpC-k9LqR18tX6f3PE4VEhAYw2MhPQmzeDMGUYBVJE8yGhQfgJdIN8oQODVKIDM92jfNhlMLTA",
+      "scope" : "GOOGLE",
+      "types" : [ "travel_agency", "point_of_interest", "establishment" ],
+      "vicinity" : "Europaplatz 1, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.5305726,
+          "lng" : 13.3791755
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.53104835,
+            "lng" : 13.3802891
+          },
+          "southwest" : {
+            "lat" : 52.52914535000001,
+            "lng" : 13.3788043
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/museum-71.png",
+      "id" : "204ebb2d3876cdf416eddfb905aa06f8af33aea9",
+      "name" : "Museum für Naturkunde",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 2448,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/102288838948287408030/photos\"\u003e吴雍靓\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAABfTjkti7nMEWGL9iMAOtVNLjW5EmxzULpvLnNPz-YBnE7bB6Wj1RkytEEZwdEnhgOm4qontsJEpUG4sLtv6_YP39q7jQALB-lTwh4nck3KICc-kXor6Pj2WQFAjKO5YWUYClsYMOiq-P2lkxoFbLdBw6VGMHlpk8IfrRBo6m90JEhBl-ktFixGuX8ukqJG_Uat8GhTuHB606wrsLoNg5V10Fp2_OdqYog",
+          "width" : 3264
+        }
+      ],
+      "place_id" : "ChIJ3eWqqpRRqEcRjILZ3j4y0Hs",
+      "rating" : 4.2,
+      "reference" : "CnRpAAAApUpZ_rhiRuJOMQ355KNP5TAZBfpsDqEI3wN0XQ4OFssXNay_RrrF8s7uuNkzo54cvny5ElzJmDCFaMHOr96gMfWSPdQ9Expeamx_sZ8OuzjAlPjhvgltiBOwKK_0Lh8GFPYknXVYy_4QIg_WbYeTyxIQ5aC-AXRnSBt1Z-r-p3uDcxoUJdm3XwF7MXRbZP7KA0jGwxsQxf4",
+      "scope" : "GOOGLE",
+      "types" : [ "museum", "point_of_interest", "establishment" ],
+      "vicinity" : "Invalidenstraße 43, Berlin"
+    },
+    {
+      "geometry" : {
+        "location" : {
+          "lat" : 52.52839059999999,
+          "lng" : 13.4570176
+        },
+        "viewport" : {
+          "northeast" : {
+            "lat" : 52.52877024999999,
+            "lng" : 13.4570433
+          },
+          "southwest" : {
+            "lat" : 52.52826405,
+            "lng" : 13.45694050000001
+          }
+        }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/lodging-71.png",
+      "id" : "d25b896f1f7e761f18bdf2aa51d2dfb3f544868c",
+      "name" : "andel's by Vienna House Berlin",
+      "opening_hours" : {
+        "open_now" : true,
+        "weekday_text" : []
+      },
+      "photos" : [
+        {
+          "height" : 1366,
+          "html_attributions" : [
+            "\u003ca href=\"https://maps.google.com/maps/contrib/109712177321488120732/photos\"\u003eandel&#39;s by Vienna House Berlin\u003c/a\u003e"
+          ],
+          "photo_reference" : "CoQBdwAAAK4ET6XO8cPyx7YP-j0X7YgIAo3WSqY8JXQMf6norn29bhrACTRVTHPfog3B3_9atrH08i9wXMG7e8iVDsqjBmY7S4XGMD8T5bKTsDdmQS6rI7AbGUndt3WOrt7NPeEQhMfnjKgVttMDAxVfSGkjsa6mryZ7xuD58PxPaBDzwqmpEhDynVrUcp6vcrG49X84ZnyeGhRRBbwQAC4bbWvmpad0rflqkVBuqg",
+          "width" : 2048
+        }
+      ],
+      "place_id" : "ChIJA65CgXpOqEcRYAJJ5gU_CF0",
+      "rating" : 4.3,
+      "reference" : "CoQBcQAAAKwQGo8JeH2a0jrERW4zarB0-qjcLOLyvLLsNjdencLvFCoXxBfRolMAFEKjChDn4lOEGkX4K-vDN-UKHNS486esUNDg634YdXtfhL5wGADcFyw8qdM93nJmduWvazzcTEMtBf7KT36XpSUT5FUZy1Jp_4j7lXSaCK3eNBJSiTqhEhCAsrKVwXuMOKB-12ponPiwGhSh18VpOYBC0UCdiSY3G9KIWG7Fpg",
+      "scope" : "GOOGLE",
+      "types" : [ "lodging", "point_of_interest", "establishment" ],
+      "vicinity" : "Landsberger Allee 106, Berlin"
+    }
+  ],
+  "status" : "OK"
+}
