@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.liujuan.destination.CityDetailActivity;
 import com.liujuan.destination.R;
 import com.liujuan.destination.model.City;
+import com.liujuan.destination.model.PhotoResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/4.
@@ -42,7 +44,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         final Context context = holder.cityImage.getContext();
         float px = 160 * context.getResources().getDisplayMetrics().density;
         int pixel = (int) px;
-        Picasso.with(context).load(city.getImages().get(0)).resize(pixel, pixel).centerCrop().into(holder.cityImage);
+        List<PhotoResponse> images = city.getImages();
+        if (images != null && !images.isEmpty()) {
+            Picasso.with(context).load(images.get(0).getPhotoUrl()).resize(pixel, pixel).centerCrop().into(holder.cityImage);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

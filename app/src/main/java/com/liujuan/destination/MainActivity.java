@@ -20,10 +20,13 @@ import android.widget.ListView;
 
 import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.model.City;
+import com.liujuan.destination.model.PhotoResponse;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = "MainActivity";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -97,45 +100,11 @@ public class MainActivity extends AppCompatActivity {
     private void mockCities() {
         mCities = new ArrayList<>();
 
-        ArrayList<String> images = new ArrayList<>();
-        images.add("http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg");
-        mCities.add(new City("Berlin", images));
-
-        ArrayList<String> images1 = new ArrayList<>();
-        images1.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("Hamburger", images1));
-
-        ArrayList<String> images2 = new ArrayList<>();
-        images2.add("http://www.telegraph.co.uk/content/dam/Travel/Destinations/Asia/China/Beijing/Beijing-cityguide-statue-xlarge.jpg");
-        mCities.add(new City("Beijing", images2));
-
-        ArrayList<String> images3 = new ArrayList<>();
-        images3.add("https://media.timeout.com/images/100644443/image.jpg");
-        mCities.add(new City("London", images3));
-
-        ArrayList<String> images4 = new ArrayList<>();
-        images4.add("https://www.burgessyachts.com/media/adminforms/locations/t/o/tokyo_1_1.jpg");
-        mCities.add(new City("Tokyo", images4));
-
-        ArrayList<String> images5 = new ArrayList<>();
-        images5.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("New York", images5));
-
-        ArrayList<String> images6 = new ArrayList<>();
-        images6.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("Sydney", images6));
-
-        ArrayList<String> images7 = new ArrayList<>();
-        images7.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("Washington", images7));
-
-        ArrayList<String> images8 = new ArrayList<>();
-        images8.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("Barcelona", images8));
-
-        ArrayList<String> images9 = new ArrayList<>();
-        images9.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        mCities.add(new City("Paris", images9));
+        List<PhotoResponse> images = new ArrayList<>();
+        images.add(new PhotoResponse(500, 500, "http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg"));
+        City berlin = new City("Berlin");
+        berlin.setImages(images);
+        mCities.add(berlin);
     }
 
     @Override
@@ -160,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -169,8 +137,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void selectItem(int position) {
-        Log.i("----", position + "");
+        Log.i(TAG, "select postion is:" + position);
     }
-
 
 }

@@ -3,27 +3,36 @@ package com.liujuan.destination.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/4.
  */
 public class City implements Parcelable {
     private String name;
-    private ArrayList<String> images;
-    private long longitude;
-    private long latitude;
+    private List<PhotoResponse> images;
+    private double longitude;
+    private double latitude;
+    private String id;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public static final Creator<City> CREATOR = new Creator<City>() {
         @Override
         public City createFromParcel(Parcel parcel) {
             String name = parcel.readString();
-            ArrayList<String> list = new ArrayList<>();
-            parcel.readStringList(list);
-            City object = new City(name, list);
-            object.longitude = parcel.readLong();
-            object.latitude = parcel.readLong();
+            List<PhotoResponse> response = parcel.createTypedArrayList(PhotoResponse.CREATOR);
+            City object = new City(name);
+            object.setLongitude(parcel.readDouble());
+            object.setLatitude(parcel.readDouble());
+            object.setId(parcel.readString());
+            object.setImages(response);
             return object;
         }
 
@@ -33,9 +42,8 @@ public class City implements Parcelable {
         }
     };
 
-    public City(String name, ArrayList<String> image) {
+    public City(String name) {
         this.name = name;
-        this.images = image;
     }
 
     public String getName() {
@@ -46,27 +54,27 @@ public class City implements Parcelable {
         this.name = name;
     }
 
-    public ArrayList<String> getImages() {
+    public List<PhotoResponse> getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<String> images) {
+    public void setImages(List<PhotoResponse> images) {
         this.images = images;
     }
 
-    public long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -78,8 +86,9 @@ public class City implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(name);
-        parcel.writeStringList(images);
-        parcel.writeLong(longitude);
-        parcel.writeLong(latitude);
+        parcel.writeTypedList(images);
+        parcel.writeDouble(longitude);
+        parcel.writeDouble(latitude);
+        parcel.writeString(id);
     }
 }

@@ -3,8 +3,6 @@ package com.liujuan.destination;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,21 +19,22 @@ import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.model.City;
-import com.liujuan.destination.model.PointOfInterest;
-import com.liujuan.destination.parser.PointOfInterestJsonParser;
+import com.liujuan.destination.model.InterestResponse;
+import com.liujuan.destination.model.Location;
+import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.model.PhotosOfCityResponse;
+import com.liujuan.destination.model.PlaceResponse;
+import com.liujuan.destination.net.NetClient;
+import com.liujuan.destination.net.parser.GeometryDeserializer;
+import com.liujuan.destination.net.parser.PhotoDeserializer;
+import com.liujuan.destination.net.parser.PhotosOfCityDeserializer;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,6 +45,7 @@ public class CityDetailActivity extends AppCompatActivity {
     public static final String CURRENT_CITY = "currentCity";
     public static final String KET_FAVORITE_CITIES = "Favorite cities";
     private static final String TAG = "CityDetailActivity";
+    public static final String WEB_API_KEY = "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
     private TextView mCityNameView;
     private City mCurrentCity;
     private Handler mHandler;
@@ -53,6 +53,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private boolean isPaused;
     private Runnable mRunnable;
     private SharedPreferences mSharedPreferences;
+    private CustomGalleryPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +72,13 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
+        initGallery();
 
         mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         mHandler = new Handler();
-        setCityNameAndImages();
+        updateCityName();
+        updateGalleryAdapter(mCurrentCity);
         setAutoScroll();
-        loadDataFromInterNet("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=51.503186,-0.126446&radius=5000&type=point_of_interest&key=" + "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98");
     }
 
     private boolean readIsFavorite() {
@@ -89,25 +91,28 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void autoScrollGallery() {
-        int index = mGallery.getCurrentItem();
-        if (index < mGallery.getAdapter().getCount() - 1) {
-            index++;
-        } else {
-            index = 0;
+        int count = mGallery.getAdapter().getCount();
+        if (count > 0) {
+            int index = mGallery.getCurrentItem();
+            if (index < count - 1) {
+                index++;
+            } else {
+                index = 0;
+            }
+            mGallery.setCurrentItem(index, true);
         }
-        mGallery.setCurrentItem(index, true);
     }
 
-    private void setCityNameAndImages() {
+    private void updateCityName() {
         if (mCurrentCity != null) {
             setCityName(mCurrentCity.getName());
-            setGallery(mockACity("Beijing").getImages());
         }
     }
 
-    private void setGallery(ArrayList<String> imageUrls) {
+    private void initGallery() {
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
-        mGallery.setAdapter(new CustomGalleryPagerAdapter(this, imageUrls));
+        mAdapter = new CustomGalleryPagerAdapter(this);
+        mGallery.setAdapter(mAdapter);
     }
 
     private void setAutoScroll() {
@@ -118,27 +123,16 @@ public class CityDetailActivity extends AppCompatActivity {
                     autoScrollGallery();
                 }
                 if (!CityDetailActivity.this.isFinishing()) {
-                    mHandler.postDelayed(mRunnable, 1000);
+                    mHandler.postDelayed(mRunnable, 2500);
                 }
             }
         };
         mHandler.postDelayed(mRunnable, 1000);
     }
 
-    private City mockACity(String name) {
-        ArrayList<String> images = new ArrayList<>();
-        images.add("http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg");
-        images.add("http://www.telegraph.co.uk/content/dam/Travel/Destinations/Asia/China/Beijing/Beijing-cityguide-statue-xlarge.jpg");
-        images.add("https://media.timeout.com/images/100644443/image.jpg");
-        images.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        images.add("http://www.eia-jc.org/fileadmin/BILDER/HAMBURG/Hamburger_Rathaus_Luftperspektive.jpg");
-        return new City(name, images);
-    }
-
     private void setToolBarUpButton() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
     private void setToolBar() {
         setSupportActionBar((Toolbar) findViewById(R.id.city_details_toolbar));
@@ -156,11 +150,15 @@ public class CityDetailActivity extends AppCompatActivity {
         isPaused = false;
     }
 
-
     @Override
     protected void onPause() {
         isPaused = true;
         super.onPause();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -192,6 +190,11 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setCityName(String name) {
+        getSupportActionBar().setTitle(name);
+        mCityNameView.setText(name);
+    }
+
     private void writeFavorite(boolean isFavorite) {
         Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
         if (isFavorite) {
@@ -214,103 +217,95 @@ public class CityDetailActivity extends AppCompatActivity {
         } catch (GooglePlayServicesRepairableException |
                 GooglePlayServicesNotAvailableException e) {
             // TODO: Handle the error.
-            Log.i("++++++", e.toString());
+            Log.i(TAG, "google place autocomplete intent error:" + e.getMessage());
         }
     }
-
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
-                mCurrentCity = mockACity(place.getName().toString());
-                setCityNameAndImages();
+                mCurrentCity = createCityFromPlace(place);
+                updateCityName();
                 invalidateOptionsMenu();
+                loadDataFromInterNet(mCurrentCity);
             } else {
                 finish();
             }
         }
     }
 
-    private void setCityName(String name) {
-        getSupportActionBar().setTitle(name);
-        mCityNameView.setText(name);
+    private City createCityFromPlace(Place place) {
+        City city = new City(place.getName().toString());
+        city.setLatitude(place.getLatLng().latitude);
+        city.setLongitude(place.getLatLng().longitude);
+        city.setId(place.getId());
+        return city;
     }
 
-
-    public boolean isOnline() {
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivityManager.getActiveNetworkInfo();
-        return (info != null && info.isConnected());
-    }
-
-    public void loadDataFromInterNet(String url) {
-        if (isOnline()) {
-            new DownloadTask().execute(url);
+    private void loadDataFromInterNet(City city) {
+        if (NetClient.isOnline(this)) {
+            new FetchCityImagesTask().execute(city);
+            new FetchPlaceOfInterestTask().execute(city);
         } else {
-            Log.i("---------", "no network");
+            Log.i(TAG, "load data from internet");
         }
-
     }
 
-    private class DownloadTask extends AsyncTask<String, Void, String> {
+    private void updateGalleryAdapter(City city) {
+        if (city != null) {
+            mAdapter.setImages(city.getImages());
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class FetchCityImagesTask extends AsyncTask<City, Void, PhotosOfCityResponse> {
 
         @Override
-        protected String doInBackground(String... params) {
-            return downloadUrl(params[0]);
+        protected PhotosOfCityResponse doInBackground(City... params) {
+            Log.i(TAG, "fetching images views of a city");
+            City city = params[0];
+            String url = String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%1$s&key=" + WEB_API_KEY, city.getId());
+            String result = NetClient.getString(url);
+            GsonBuilder gsonBuilder = new GsonBuilder()
+                    .registerTypeAdapter(PhotosOfCityResponse.class, new PhotosOfCityDeserializer());
+            Gson gson = gsonBuilder.create();
+            PhotosOfCityResponse placeResponse = gson.fromJson(result, PhotosOfCityResponse.class);
+            return placeResponse;
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            mCityNameView.setText(s);
-            List<PointOfInterest> list = new PointOfInterestJsonParser(s).getPointsOfInterest();
-            for (PointOfInterest p : list) {
-                Log.i("======", p.toString());
+        protected void onPostExecute(PhotosOfCityResponse response) {
+            mCurrentCity.setImages(response.getPhotos());
+            updateGalleryAdapter(mCurrentCity);
+        }
+    }
+
+    private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
+
+        @Override
+        protected PlaceResponse doInBackground(City... params) {
+            Log.i(TAG, "fetching places of interest of a city");
+            City city = params[0];
+            String latlng = city.getLatitude() + "," + city.getLongitude();
+            String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%1$s&radius=%2$s&type=point_of_interest&key=" + WEB_API_KEY, latlng, String.valueOf(5000));
+            String result = NetClient.getString(url);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(Location.class, new GeometryDeserializer())
+                    .registerTypeAdapter(PhotoResponse.class, new PhotoDeserializer());
+            Gson gson = gsonBuilder.create();
+            PlaceResponse placeResponse = gson.fromJson(result, PlaceResponse.class);
+
+            return placeResponse;
+        }
+
+        @Override
+        protected void onPostExecute(PlaceResponse response) {
+            StringBuilder sb = new StringBuilder();
+            for (InterestResponse interestResponse : response.getIntests()) {
+                sb.append(interestResponse).append("\n");
             }
+            mCityNameView.setText(sb.toString());
         }
     }
-
-    private String downloadUrl(String myUrl) {
-        InputStream in = null;
-        try {
-            URL url = new URL(myUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setReadTimeout(10000);
-            connection.setConnectTimeout(15000);
-            connection.setRequestMethod("POST");
-            connection.setDoInput(true);
-            connection.connect();
-
-            int responseCode = connection.getResponseCode();
-            Log.d("------", "the response is : " + responseCode);
-
-            in = connection.getInputStream();
-            String contentAsString = readIn(in, 10000);
-            return contentAsString;
-        } catch (Exception e) {
-            Log.e(TAG, "error happened when downloading URL:" + myUrl + ", error:" + e.getMessage());
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
-    }
-
-    public String readIn(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-        ByteArrayOutputStream result = new ByteArrayOutputStream();
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = stream.read(buffer)) != -1) {
-            result.write(buffer, 0, length);
-        }
-        return result.toString("UTF-8");
-    }
-
-
 }
