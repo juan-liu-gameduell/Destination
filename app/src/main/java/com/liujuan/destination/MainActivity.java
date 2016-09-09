@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         }
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(SPAN_COUNT, 50, true));
         mLayoutManager = new GridLayoutManager(this, SPAN_COUNT);
-        mAdapter = new CityAdapter(mCities);
+        mAdapter = new CityAdapter(mCities, this);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
     }

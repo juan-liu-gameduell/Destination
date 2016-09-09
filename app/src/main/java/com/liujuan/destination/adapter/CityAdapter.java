@@ -13,6 +13,7 @@ import com.liujuan.destination.CityDetailActivity;
 import com.liujuan.destination.R;
 import com.liujuan.destination.model.City;
 import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.utl.LayoutUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
     public static final String EXTRA_CITY = "city";
     private ArrayList<City> mCities;
+    private int photoWidth;
 
-    public CityAdapter(ArrayList<City> cityiesData) {
+    public CityAdapter(ArrayList<City> cityiesData, Context context) {
         mCities = cityiesData;
+        photoWidth = (int) LayoutUtil.convertDpToPixel(160, context);
     }
 
     @Override
@@ -42,11 +45,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
         final City city = mCities.get(position);
         holder.cityName.setText(city.getName());
         final Context context = holder.cityImage.getContext();
-        float px = 160 * context.getResources().getDisplayMetrics().density;
-        int pixel = (int) px;
+
         List<PhotoResponse> images = city.getImages();
         if (images != null && !images.isEmpty()) {
-            Picasso.with(context).load(images.get(0).getPhotoUrl()).resize(pixel, pixel).centerCrop().into(holder.cityImage);
+            Picasso.with(context).load(images.get(0).getPhotoUrl()).resize(photoWidth, photoWidth).centerCrop().into(holder.cityImage);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
