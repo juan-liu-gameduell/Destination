@@ -14,6 +14,7 @@ public class City implements Parcelable {
     private double longitude;
     private double latitude;
     private String id;
+    private String url;
 
     public String getId() {
         return id;
@@ -90,5 +91,13 @@ public class City implements Parcelable {
         parcel.writeDouble(longitude);
         parcel.writeDouble(latitude);
         parcel.writeString(id);
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

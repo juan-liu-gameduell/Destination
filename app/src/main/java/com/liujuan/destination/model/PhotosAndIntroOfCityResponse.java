@@ -5,10 +5,11 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class PhotosOfCityResponse {
+public class PhotosAndIntroOfCityResponse {
+    private String introductionUrl;
     private List<PhotoResponse> photos;
 
-    public PhotosOfCityResponse() {
+    public PhotosAndIntroOfCityResponse() {
     }
 
     public List<PhotoResponse> getPhotos() {
@@ -17,5 +18,13 @@ public class PhotosOfCityResponse {
 
     public void setPhotos(List<PhotoResponse> photos) {
         this.photos = photos;
+    }
+
+    public String getIntroductionUrl() {
+        return introductionUrl;
+    }
+
+    public void setIntroductionUrl(String introductionUrl) {
+        this.introductionUrl = introductionUrl;
     }
 }

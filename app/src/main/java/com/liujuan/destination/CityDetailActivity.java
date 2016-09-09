@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -23,18 +25,23 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.liujuan.destination.adapter.CityAdapter;
 import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
+import com.liujuan.destination.adapter.InterestsAdapter;
 import com.liujuan.destination.model.City;
 import com.liujuan.destination.model.InterestResponse;
 import com.liujuan.destination.model.Location;
 import com.liujuan.destination.model.PhotoResponse;
-import com.liujuan.destination.model.PhotosOfCityResponse;
+import com.liujuan.destination.model.PhotosAndIntroOfCityResponse;
 import com.liujuan.destination.model.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
 import com.liujuan.destination.net.parser.GeometryDeserializer;
 import com.liujuan.destination.net.parser.PhotoDeserializer;
-import com.liujuan.destination.net.parser.PhotosOfCityDeserializer;
+import com.liujuan.destination.net.parser.PhotosAndIntroOfCityDeserializer;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -47,6 +54,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private static final String TAG = "CityDetailActivity";
     public static final String WEB_API_KEY = "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
     private TextView mCityNameView;
+    private RecyclerView mInterestRecyclerView;
     private City mCurrentCity;
     private Handler mHandler;
     private ViewPager mGallery;
@@ -54,6 +62,8 @@ public class CityDetailActivity extends AppCompatActivity {
     private Runnable mRunnable;
     private SharedPreferences mSharedPreferences;
     private CustomGalleryPagerAdapter mAdapter;
+    private List<InterestResponse> mInterests;
+    private InterestsAdapter mInterestsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +72,9 @@ public class CityDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_details);
         setToolBar();
         setToolBarUpButton();
+        mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
         mCityNameView = (TextView) findViewById(R.id.city_details_name);
+        mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
         } else {
@@ -72,13 +84,22 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
-        initGallery();
-
+        mInterests = new ArrayList<>();
+        mAdapter = new CustomGalleryPagerAdapter(this);
+        mGallery.setAdapter(mAdapter);
+        setInterestRecyclerView();
         mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         mHandler = new Handler();
         updateCityName();
         updateGalleryAdapter(mCurrentCity);
         setAutoScroll();
+    }
+
+    private void setInterestRecyclerView() {
+        mInterestRecyclerView.setHasFixedSize(true);
+        mInterestsAdapter = new InterestsAdapter();
+        mInterestRecyclerView.setAdapter(mInterestsAdapter);
+        mInterestRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     private boolean readIsFavorite() {
@@ -107,12 +128,6 @@ public class CityDetailActivity extends AppCompatActivity {
         if (mCurrentCity != null) {
             setCityName(mCurrentCity.getName());
         }
-    }
-
-    private void initGallery() {
-        mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
-        mAdapter = new CustomGalleryPagerAdapter(this);
-        mGallery.setAdapter(mAdapter);
     }
 
     private void setAutoScroll() {
@@ -259,27 +274,29 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
-    private class FetchCityImagesTask extends AsyncTask<City, Void, PhotosOfCityResponse> {
+    private class FetchCityImagesTask extends AsyncTask<City, Void, PhotosAndIntroOfCityResponse> {
 
         @Override
-        protected PhotosOfCityResponse doInBackground(City... params) {
+        protected PhotosAndIntroOfCityResponse doInBackground(City... params) {
             Log.i(TAG, "fetching images views of a city");
             City city = params[0];
             String url = String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%1$s&key=" + WEB_API_KEY, city.getId());
             String result = NetClient.getString(url);
             GsonBuilder gsonBuilder = new GsonBuilder()
-                    .registerTypeAdapter(PhotosOfCityResponse.class, new PhotosOfCityDeserializer());
+                    .registerTypeAdapter(PhotosAndIntroOfCityResponse.class, new PhotosAndIntroOfCityDeserializer());
             Gson gson = gsonBuilder.create();
-            PhotosOfCityResponse placeResponse = gson.fromJson(result, PhotosOfCityResponse.class);
+            PhotosAndIntroOfCityResponse placeResponse = gson.fromJson(result, PhotosAndIntroOfCityResponse.class);
             return placeResponse;
         }
 
         @Override
-        protected void onPostExecute(PhotosOfCityResponse response) {
+        protected void onPostExecute(PhotosAndIntroOfCityResponse response) {
             mCurrentCity.setImages(response.getPhotos());
+            mCurrentCity.setUrl(response.getIntroductionUrl());
             updateGalleryAdapter(mCurrentCity);
         }
     }
+
 
     private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
 
@@ -288,7 +305,7 @@ public class CityDetailActivity extends AppCompatActivity {
             Log.i(TAG, "fetching places of interest of a city");
             City city = params[0];
             String latlng = city.getLatitude() + "," + city.getLongitude();
-            String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%1$s&radius=%2$s&type=point_of_interest&key=" + WEB_API_KEY, latlng, String.valueOf(5000));
+            String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%1$s&radius=%2$s&rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium&sensor=false&key=" + WEB_API_KEY, latlng, String.valueOf(10000));
             String result = NetClient.getString(url);
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Location.class, new GeometryDeserializer())
@@ -301,11 +318,28 @@ public class CityDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(PlaceResponse response) {
-            StringBuilder sb = new StringBuilder();
-            for (InterestResponse interestResponse : response.getIntests()) {
-                sb.append(interestResponse).append("\n");
-            }
-            mCityNameView.setText(sb.toString());
+            List<InterestResponse> list = response.getIntests();
+
+            Collections.sort(list, new Comparator<InterestResponse>() {
+                @Override
+                public int compare(final InterestResponse lhs, InterestResponse rhs) {
+                    //TODO return 1 if rhs should be before lhs
+                    //     return -1 if lhs should be before rhs
+                    //     return 0 otherwise
+                    if (lhs.getRating() > rhs.getRating()) {
+                        return -1;
+                    } else if (lhs.getRating() < rhs.getRating()) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            });
+
+
+            mInterests = list;
+            mInterestsAdapter.setInterests(mInterests);
+            mInterestsAdapter.notifyDataSetChanged();
         }
     }
 }
