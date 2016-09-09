@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.net.SearchService;
 
 import java.lang.reflect.Type;
 
@@ -26,7 +27,7 @@ public class PhotoDeserializer implements JsonDeserializer<PhotoResponse> {
         int height = jsonObject.get("height").getAsInt();
         int width = jsonObject.get("width").getAsInt();
         String reference = jsonObject.get("photo_reference").getAsString();
-        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%d&photoreference=" + reference + "&key=AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
+        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%d&photoreference=" + reference + "&key=" + SearchService.API_KEY;
 
         return new PhotoResponse(height, width, url);
     }

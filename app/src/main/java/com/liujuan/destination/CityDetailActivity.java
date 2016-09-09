@@ -52,7 +52,6 @@ public class CityDetailActivity extends AppCompatActivity {
     public static final String CURRENT_CITY = "currentCity";
     public static final String KET_FAVORITE_CITIES = "Favorite cities";
     private static final String TAG = "CityDetailActivity";
-    public static final String WEB_API_KEY = "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
     private TextView mCityNameView;
     private RecyclerView mInterestRecyclerView;
     private City mCurrentCity;
@@ -275,7 +274,7 @@ public class CityDetailActivity extends AppCompatActivity {
         protected PhotosAndIntroOfCityResponse doInBackground(City... params) {
             Log.i(TAG, "fetching images views of a city");
             City city = params[0];
-            String url = String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%1$s&key=" + WEB_API_KEY, city.getId());
+            String url = String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%1$s&key=" + SearchService.API_KEY, city.getId());
             String result = NetClient.getString(url);
             GsonBuilder gsonBuilder = new GsonBuilder()
                     .registerTypeAdapter(PhotosAndIntroOfCityResponse.class, new PhotosAndIntroOfCityDeserializer());
