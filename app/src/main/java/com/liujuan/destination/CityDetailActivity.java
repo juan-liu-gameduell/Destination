@@ -28,14 +28,10 @@ import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.adapter.InterestsAdapter;
 import com.liujuan.destination.model.City;
 import com.liujuan.destination.model.InterestResponse;
-import com.liujuan.destination.model.Location;
-import com.liujuan.destination.model.PhotoResponse;
 import com.liujuan.destination.model.PhotosAndIntroOfCityResponse;
 import com.liujuan.destination.model.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
 import com.liujuan.destination.net.SearchService;
-import com.liujuan.destination.net.parser.GeometryDeserializer;
-import com.liujuan.destination.net.parser.PhotoDeserializer;
 import com.liujuan.destination.net.parser.PhotosAndIntroOfCityDeserializer;
 
 import java.io.IOException;
@@ -46,7 +42,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 
 /**
@@ -309,50 +304,44 @@ public class CityDetailActivity extends AppCompatActivity {
             Log.i(TAG, "fetching places of interest of a city");
             City city = params[0];
             String latlng = city.getLatitude() + "," + city.getLongitude();
-            String result = "";
 
             SearchService searchService = SearchService.Factory.create();
-            Call<ResponseBody> stringCall = searchService.searchNearby(latlng, 5000, "point_of_interest", city.getName().toString());
+            Call<PlaceResponse> stringCall = searchService.searchNearbyPointsOfInterest(latlng, 10000);
             try {
-                ResponseBody body = stringCall.execute().body();
-                result = body.string();
+                return stringCall.execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.registerTypeAdapter(Location.class, new GeometryDeserializer())
-                    .registerTypeAdapter(PhotoResponse.class, new PhotoDeserializer());
-            Gson gson = gsonBuilder.create();
-            PlaceResponse placeResponse = gson.fromJson(result, PlaceResponse.class);
-
-            return placeResponse;
+            return null;
         }
 
         @Override
         protected void onPostExecute(PlaceResponse response) {
-            List<InterestResponse> list = response.getIntests();
+            if (response == null) {
 
-            Collections.sort(list, new Comparator<InterestResponse>() {
-                @Override
-                public int compare(final InterestResponse lhs, InterestResponse rhs) {
-                    //TODO return 1 if rhs should be before lhs
-                    //     return -1 if lhs should be before rhs
-                    //     return 0 otherwise
-                    if (lhs.getRating() > rhs.getRating()) {
-                        return -1;
-                    } else if (lhs.getRating() < rhs.getRating()) {
-                        return 1;
-                    } else {
-                        return 0;
+            } else {
+                List<InterestResponse> list = response.getIntests();
+
+                Collections.sort(list, new Comparator<InterestResponse>() {
+                    @Override
+                    public int compare(final InterestResponse lhs, InterestResponse rhs) {
+                        //TODO return 1 if rhs should be before lhs
+                        //     return -1 if lhs should be before rhs
+                        //     return 0 otherwise
+                        if (lhs.getRating() > rhs.getRating()) {
+                            return -1;
+                        } else if (lhs.getRating() < rhs.getRating()) {
+                            return 1;
+                        } else {
+                            return 0;
+                        }
                     }
-                }
-            });
+                });
 
-
-            mInterests = list;
-            mInterestsAdapter.setInterests(mInterests);
-            mInterestsAdapter.notifyDataSetChanged();
+                mInterests = list;
+                mInterestsAdapter.setInterests(mInterests);
+                mInterestsAdapter.notifyDataSetChanged();
+            }
         }
     }
 }
