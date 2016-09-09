@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="destination_city_recyclerview_item_width">120dp</dimen>
     <dimen name="destination_city_recyclerview_item_height">120dp</dimen>
+    <dimen name="point_of_interest_photo_width">100dp</dimen>
+    <dimen name="point_of_interest_photo_height">80dp</dimen>
 </resources>

@@ -33,16 +33,21 @@ import com.liujuan.destination.model.PhotoResponse;
 import com.liujuan.destination.model.PhotosAndIntroOfCityResponse;
 import com.liujuan.destination.model.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
+import com.liujuan.destination.net.SearchService;
 import com.liujuan.destination.net.parser.GeometryDeserializer;
 import com.liujuan.destination.net.parser.PhotoDeserializer;
 import com.liujuan.destination.net.parser.PhotosAndIntroOfCityDeserializer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 
 /**
  * Created by Administrator on 2016/9/5.
@@ -97,7 +102,7 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private void setInterestRecyclerView() {
         mInterestRecyclerView.setHasFixedSize(true);
-        mInterestsAdapter = new InterestsAdapter();
+        mInterestsAdapter = new InterestsAdapter(this);
         mInterestRecyclerView.setAdapter(mInterestsAdapter);
         mInterestRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -205,11 +210,6 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void setCityName(String name) {
-        getSupportActionBar().setTitle(name);
-        mCityNameView.setText(name);
-    }
-
     private void writeFavorite(boolean isFavorite) {
         Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
         if (isFavorite) {
@@ -297,6 +297,10 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void setCityName(String name) {
+        getSupportActionBar().setTitle(name);
+        mCityNameView.setText(name);
+    }
 
     private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
 
@@ -305,8 +309,17 @@ public class CityDetailActivity extends AppCompatActivity {
             Log.i(TAG, "fetching places of interest of a city");
             City city = params[0];
             String latlng = city.getLatitude() + "," + city.getLongitude();
-            String url = String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=%1$s&radius=%2$s&rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium&sensor=false&key=" + WEB_API_KEY, latlng, String.valueOf(10000));
-            String result = NetClient.getString(url);
+            String result = "";
+
+            SearchService searchService = SearchService.Factory.create();
+            Call<ResponseBody> stringCall = searchService.searchNearby(latlng, 5000, "point_of_interest", city.getName().toString());
+            try {
+                ResponseBody body = stringCall.execute().body();
+                result = body.string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             GsonBuilder gsonBuilder = new GsonBuilder();
             gsonBuilder.registerTypeAdapter(Location.class, new GeometryDeserializer())
                     .registerTypeAdapter(PhotoResponse.class, new PhotoDeserializer());

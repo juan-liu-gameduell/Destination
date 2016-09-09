@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.liujuan.destination.R;
 import com.liujuan.destination.model.InterestResponse;
+import com.liujuan.destination.utl.LayoutUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -20,8 +21,10 @@ import java.util.List;
 public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.ViewHolder> {
 
     private List<InterestResponse> interests;
+    private int photoWidthInPixel;
 
-    public InterestsAdapter() {
+    public InterestsAdapter(Context context) {
+        photoWidthInPixel = (int) LayoutUtil.convertDpToPixel(context.getResources().getDimension(R.dimen.point_of_interest_photo_width), context);
     }
 
     public void setInterests(List<InterestResponse> interests) {
@@ -42,7 +45,7 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.View
         holder.interestAddress.setText(interest.getAddress());
         holder.interestRating.setText("Rating: " + interest.getRating());
         if (interest.getPhotos() != null && !interest.getPhotos().isEmpty()) {
-            String imageUrl = String.format(interest.getPhotos().get(0).getPhotoUrl(), holder.interestImage.getWidth());
+            String imageUrl = String.format(interest.getPhotos().get(0).getPhotoUrl(), photoWidthInPixel);
             Picasso.with(context).load(imageUrl).fit().centerCrop().into(holder.interestImage);
         }
 

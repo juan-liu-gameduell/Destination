@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/interest_image"
-        android:layout_width="100dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/point_of_interest_photo_width"
+        android:layout_height="@dimen/point_of_interest_photo_height"
         android:src="@drawable/loading"/>
 
     <TextView
