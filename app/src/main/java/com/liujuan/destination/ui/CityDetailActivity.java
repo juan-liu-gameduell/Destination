@@ -201,9 +201,9 @@ public class CityDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actionbar_city_details, menu);
         boolean isFavorite = readIsFavorite();
         if (isFavorite) {
-            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_black_24dp);
+            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_black_36dp);
         } else {
-            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_24dp);
+            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_36dp);
         }
         return true;
     }
@@ -215,9 +215,9 @@ public class CityDetailActivity extends AppCompatActivity {
                 boolean isFavorite = !readIsFavorite();
                 writeFavorite(isFavorite);
                 if (isFavorite) {
-                    item.setIcon(R.drawable.ic_favorite_black_24dp);
+                    item.setIcon(R.drawable.ic_favorite_black_36dp);
                 } else {
-                    item.setIcon(R.drawable.ic_favorite_white_24dp);
+                    item.setIcon(R.drawable.ic_favorite_white_36dp);
                 }
                 return true;
             case R.id.actionbar_search:

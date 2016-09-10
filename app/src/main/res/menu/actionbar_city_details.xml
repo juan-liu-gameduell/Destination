@@ -3,12 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/actionbar_search"
-        android:icon="@drawable/ic_action_search"
+        android:icon="@drawable/ic_search_white_36dp"
         android:title="@string/search"
         app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/action_favorite"
-        android:icon="@drawable/ic_favorite_white_24dp"
+        android:icon="@drawable/ic_favorite_white_36dp"
         android:title="@string/action_favorite"
         app:showAsAction="ifRoom"/>
 </menu>
