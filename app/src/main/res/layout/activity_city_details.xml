@@ -14,36 +14,37 @@
         android:elevation="4dp"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/city_details_gallery"
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp">
-    </android.support.v4.view.ViewPager>
+        android:layout_height="wrap_content">
 
-    <!--<TextView-->
-        <!--android:id="@+id/city_details_name"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--tools:text="123213"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <!--<TextView-->
-        <!--android:id="@+id/city_details_introduction"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--tools:text="123213"/>-->
+            <android.support.v4.view.ViewPager
+                android:id="@+id/city_details_gallery"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </android.support.v4.view.ViewPager>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recommended Places"
-        android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/recommened_place_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recommened_places"
+                android:textSize="20sp"
+                android:visibility="invisible"/>
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/city_details_points_of_interest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:scrollbars="vertical"/>
-
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/city_details_points_of_interest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                android:scrollbars="vertical"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
+
