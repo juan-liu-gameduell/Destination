@@ -6,8 +6,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.liujuan.destination.model.PhotoResponse;
-import com.liujuan.destination.model.PhotosAndIntroOfCityResponse;
+import com.liujuan.destination.dto.PhotoResponse;
+import com.liujuan.destination.dto.PhotosAndIntroOfCityResponse;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -19,8 +19,12 @@ import java.util.List;
 public class PhotosAndIntroOfCityDeserializer implements JsonDeserializer<PhotosAndIntroOfCityResponse> {
     @Override
     public PhotosAndIntroOfCityResponse deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject asJsonObject = json.getAsJsonObject();
-        JsonObject result = asJsonObject.get("result").getAsJsonObject();
+        JsonObject jsonObject = json.getAsJsonObject();
+        if (!jsonObject.get("status").getAsString().equals("OK")) {
+            return PhotosAndIntroOfCityResponse.createError(jsonObject.get("status").getAsString(),
+                    jsonObject.get("error_message").getAsString());
+        }
+        JsonObject result = jsonObject.get("result").getAsJsonObject();
 
         List<PhotoResponse> realPhotoUrls = null;
         String intro = null;
@@ -36,7 +40,7 @@ public class PhotosAndIntroOfCityDeserializer implements JsonDeserializer<Photos
             }
         }
 
-        PhotosAndIntroOfCityResponse photosOfCityResponse = new PhotosAndIntroOfCityResponse();
+        PhotosAndIntroOfCityResponse photosOfCityResponse = PhotosAndIntroOfCityResponse.create();
         photosOfCityResponse.setPhotos(realPhotoUrls);
         photosOfCityResponse.setIntroductionUrl(intro);
         return photosOfCityResponse;

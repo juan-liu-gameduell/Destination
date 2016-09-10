@@ -1,4 +1,4 @@
-package com.liujuan.destination.model;
+package com.liujuan.destination.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;

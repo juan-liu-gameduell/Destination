@@ -1,7 +1,10 @@
-package com.liujuan.destination.model;
+package com.liujuan.destination.vo;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.liujuan.destination.dto.InterestResponse;
+import com.liujuan.destination.dto.PhotoResponse;
 
 import java.util.List;
 
@@ -15,6 +18,15 @@ public class City implements Parcelable {
     private double latitude;
     private String id;
     private String url;
+    private List<InterestResponse> interests;
+
+    public List<InterestResponse> getInterests() {
+        return interests;
+    }
+
+    public void setInterests(List<InterestResponse> interests) {
+        this.interests = interests;
+    }
 
     public String getId() {
         return id;
@@ -34,6 +46,7 @@ public class City implements Parcelable {
             object.setLatitude(parcel.readDouble());
             object.setId(parcel.readString());
             object.setImages(response);
+            object.setInterests(parcel.createTypedArrayList(InterestResponse.CREATOR));
             return object;
         }
 
@@ -91,6 +104,7 @@ public class City implements Parcelable {
         parcel.writeDouble(longitude);
         parcel.writeDouble(latitude);
         parcel.writeString(id);
+        parcel.writeTypedList(interests);
     }
 
     public String getUrl() {

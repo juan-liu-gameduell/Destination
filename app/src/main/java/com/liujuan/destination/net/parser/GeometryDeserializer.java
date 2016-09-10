@@ -5,7 +5,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.liujuan.destination.model.Location;
+import com.liujuan.destination.dto.Location;
 
 import java.lang.reflect.Type;
 

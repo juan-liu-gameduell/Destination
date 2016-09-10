@@ -1,4 +1,4 @@
-package com.liujuan.destination.adapter;
+package com.liujuan.destination.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.liujuan.destination.CityDetailActivity;
 import com.liujuan.destination.R;
-import com.liujuan.destination.model.City;
-import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.vo.City;
+import com.liujuan.destination.dto.PhotoResponse;
+import com.liujuan.destination.ui.CityDetailActivity;
 import com.liujuan.destination.utl.LayoutUtil;
 import com.squareup.picasso.Picasso;
 

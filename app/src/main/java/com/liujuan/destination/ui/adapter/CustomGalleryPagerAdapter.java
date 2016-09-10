@@ -1,4 +1,4 @@
-package com.liujuan.destination.adapter;
+package com.liujuan.destination.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.dto.PhotoResponse;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -36,10 +36,10 @@ public class CustomGalleryPagerAdapter extends PagerAdapter {
         View itemView = inflater.inflate(R.layout.activity_city_details_pager_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.pager_item_image);
         if (mImages == null || mImages.isEmpty()) {
-            imageView.setImageResource(R.drawable.loading);
+            imageView.setImageResource(R.drawable.item_error);
         } else {
             String photoUrl = String.format(mImages.get(position).getPhotoUrl(), container.getWidth());
-            Picasso.with(mContext).load(photoUrl).placeholder(R.drawable.loading).fit().centerCrop().into(imageView);
+            Picasso.with(mContext).load(photoUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().centerCrop().into(imageView);
         }
         container.addView(itemView);
         return itemView;

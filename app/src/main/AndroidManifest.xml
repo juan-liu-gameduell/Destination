@@ -17,7 +17,7 @@
             android:value="AIzaSyA-Nt9crJywu3-zlnh42qyzwNVvim9hIXQ"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:launchMode="singleTop"
             >
             <intent-filter>
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CityDetailActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".ui.CityDetailActivity"
+            android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"/>
+                android:value=".ui.MainActivity"/>
         </activity>
 
     </application>

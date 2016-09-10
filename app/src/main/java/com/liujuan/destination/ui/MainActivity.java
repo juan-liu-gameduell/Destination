@@ -1,4 +1,4 @@
-package com.liujuan.destination;
+package com.liujuan.destination.ui;
 
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -18,9 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.liujuan.destination.adapter.CityAdapter;
-import com.liujuan.destination.model.City;
-import com.liujuan.destination.model.PhotoResponse;
+import com.liujuan.destination.R;
+import com.liujuan.destination.vo.City;
+import com.liujuan.destination.dto.PhotoResponse;
+import com.liujuan.destination.ui.adapter.CityAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

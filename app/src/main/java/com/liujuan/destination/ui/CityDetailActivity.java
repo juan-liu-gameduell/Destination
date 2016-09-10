@@ -1,4 +1,4 @@
-package com.liujuan.destination;
+package com.liujuan.destination.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,28 +15,26 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.liujuan.destination.adapter.CityAdapter;
-import com.liujuan.destination.adapter.CustomGalleryPagerAdapter;
-import com.liujuan.destination.adapter.InterestsAdapter;
-import com.liujuan.destination.model.City;
-import com.liujuan.destination.model.InterestResponse;
-import com.liujuan.destination.model.PhotosAndIntroOfCityResponse;
-import com.liujuan.destination.model.PlaceResponse;
+import com.liujuan.destination.R;
+import com.liujuan.destination.dto.InterestResponse;
+import com.liujuan.destination.dto.PhotosAndIntroOfCityResponse;
+import com.liujuan.destination.dto.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
 import com.liujuan.destination.net.SearchService;
-import com.liujuan.destination.net.parser.PhotosAndIntroOfCityDeserializer;
+import com.liujuan.destination.ui.adapter.CityAdapter;
+import com.liujuan.destination.ui.adapter.CustomGalleryPagerAdapter;
+import com.liujuan.destination.ui.adapter.InterestsAdapter;
+import com.liujuan.destination.vo.City;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -52,7 +51,6 @@ public class CityDetailActivity extends AppCompatActivity {
     public static final String CURRENT_CITY = "currentCity";
     public static final String KET_FAVORITE_CITIES = "Favorite cities";
     private static final String TAG = "CityDetailActivity";
-    private TextView mCityNameView;
     private RecyclerView mInterestRecyclerView;
     private City mCurrentCity;
     private Handler mHandler;
@@ -61,7 +59,6 @@ public class CityDetailActivity extends AppCompatActivity {
     private Runnable mRunnable;
     private SharedPreferences mSharedPreferences;
     private CustomGalleryPagerAdapter mAdapter;
-    private List<InterestResponse> mInterests;
     private InterestsAdapter mInterestsAdapter;
 
     @Override
@@ -72,7 +69,6 @@ public class CityDetailActivity extends AppCompatActivity {
         setToolBar();
         setToolBarUpButton();
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
-        mCityNameView = (TextView) findViewById(R.id.city_details_name);
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
@@ -83,7 +79,6 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
-        mInterests = new ArrayList<>();
         mAdapter = new CustomGalleryPagerAdapter(this);
         mGallery.setAdapter(mAdapter);
         setInterestRecyclerView();
@@ -95,8 +90,11 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void setInterestRecyclerView() {
-        mInterestRecyclerView.setHasFixedSize(true);
+        mInterestRecyclerView.setHasFixedSize(false);
         mInterestsAdapter = new InterestsAdapter(this);
+        if (mCurrentCity != null) {
+            mInterestsAdapter.setInterests(mCurrentCity.getInterests());
+        }
         mInterestRecyclerView.setAdapter(mInterestsAdapter);
         mInterestRecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
@@ -274,26 +272,28 @@ public class CityDetailActivity extends AppCompatActivity {
         protected PhotosAndIntroOfCityResponse doInBackground(City... params) {
             Log.i(TAG, "fetching images views of a city");
             City city = params[0];
-            String url = String.format("https://maps.googleapis.com/maps/api/place/details/json?placeid=%1$s&key=" + SearchService.API_KEY, city.getId());
-            String result = NetClient.getString(url);
-            GsonBuilder gsonBuilder = new GsonBuilder()
-                    .registerTypeAdapter(PhotosAndIntroOfCityResponse.class, new PhotosAndIntroOfCityDeserializer());
-            Gson gson = gsonBuilder.create();
-            PhotosAndIntroOfCityResponse placeResponse = gson.fromJson(result, PhotosAndIntroOfCityResponse.class);
-            return placeResponse;
+            SearchService searchService = SearchService.Factory.create();
+            Call<PhotosAndIntroOfCityResponse> photosCall = searchService.searchPhotosOfCity(city.getId());
+            try {
+                return photosCall.execute().body();
+            } catch (Exception e) {
+                Log.i(TAG, e.getMessage());
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(PhotosAndIntroOfCityResponse response) {
-            mCurrentCity.setImages(response.getPhotos());
-            mCurrentCity.setUrl(response.getIntroductionUrl());
-            updateGalleryAdapter(mCurrentCity);
+            if (response != null) {
+                mCurrentCity.setImages(response.getPhotos());
+                mCurrentCity.setUrl(response.getIntroductionUrl());
+                updateGalleryAdapter(mCurrentCity);
+            }
         }
     }
 
     private void setCityName(String name) {
         getSupportActionBar().setTitle(name);
-        mCityNameView.setText(name);
     }
 
     private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
@@ -316,8 +316,8 @@ public class CityDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(PlaceResponse response) {
-            if (response == null) {
-
+            if (response == null || response.hasError()) {
+                showErrorDialog(response);
             } else {
                 List<InterestResponse> list = response.getIntests();
 
@@ -337,10 +337,18 @@ public class CityDetailActivity extends AppCompatActivity {
                     }
                 });
 
-                mInterests = list;
-                mInterestsAdapter.setInterests(mInterests);
+                mCurrentCity.setInterests(list);
+                mInterestsAdapter.setInterests(mCurrentCity.getInterests());
                 mInterestsAdapter.notifyDataSetChanged();
             }
+        }
+    }
+
+    private void showErrorDialog(PlaceResponse response) {
+        if (response == null) {
+            SimpleDialog.showDialog(getFragmentManager(), getString(R.string.error_title), getString(R.string.error_message));
+        } else {
+            SimpleDialog.showDialog(getFragmentManager(), getString(R.string.error_title), response.getErrorMessage());
         }
     }
 }

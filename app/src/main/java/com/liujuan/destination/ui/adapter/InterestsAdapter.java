@@ -1,4 +1,4 @@
-package com.liujuan.destination.adapter;
+package com.liujuan.destination.ui.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.model.InterestResponse;
+import com.liujuan.destination.dto.InterestResponse;
 import com.liujuan.destination.utl.LayoutUtil;
 import com.squareup.picasso.Picasso;
 
@@ -22,8 +22,10 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.View
 
     private List<InterestResponse> interests;
     private int photoWidthInPixel;
+    private Context context;
 
     public InterestsAdapter(Context context) {
+        this.context = context;
         photoWidthInPixel = (int) LayoutUtil.convertDpToPixel(context.getResources().getDimension(R.dimen.point_of_interest_photo_width), context);
     }
 
@@ -33,20 +35,19 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.View
 
     @Override
     public InterestsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_city_details_interest_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.activity_city_details_interest_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(InterestsAdapter.ViewHolder holder, int position) {
         final InterestResponse interest = interests.get(position);
-        final Context context = holder.interestName.getContext();
         holder.interestName.setText(interest.getName());
         holder.interestAddress.setText(interest.getAddress());
         holder.interestRating.setText("Rating: " + interest.getRating());
         if (interest.getPhotos() != null && !interest.getPhotos().isEmpty()) {
             String imageUrl = String.format(interest.getPhotos().get(0).getPhotoUrl(), photoWidthInPixel);
-            Picasso.with(context).load(imageUrl).fit().centerCrop().into(holder.interestImage);
+            Picasso.with(context).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().centerCrop().into(holder.interestImage);
         }
 
     }
