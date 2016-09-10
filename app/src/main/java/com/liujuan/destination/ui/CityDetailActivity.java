@@ -61,7 +61,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private boolean isPaused;
     private Runnable mRunnable;
     private SharedPreferences mSharedPreferences;
-    private CustomGalleryPagerAdapter mAdapter;
+    private CustomGalleryPagerAdapter mGalleryAdapter;
     private InterestsAdapter mInterestsAdapter;
     private boolean isGalleryTouched;
     private TextView recommendedPlaces;
@@ -87,8 +87,8 @@ public class CityDetailActivity extends AppCompatActivity {
             }
         }
 
-        mAdapter = new CustomGalleryPagerAdapter(this);
-        mGallery.setAdapter(mAdapter);
+        mGalleryAdapter = new CustomGalleryPagerAdapter(this);
+        mGallery.setAdapter(mGalleryAdapter);
         mGallery.setOnTouchListener(createGalleryTouchListener());
         setInterestRecyclerView();
         mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
@@ -220,6 +220,9 @@ public class CityDetailActivity extends AppCompatActivity {
                     item.setIcon(R.drawable.ic_favorite_white_24dp);
                 }
                 return true;
+            case R.id.actionbar_search:
+                callPlaceAutocompleteActivityIntent();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -258,11 +261,20 @@ public class CityDetailActivity extends AppCompatActivity {
                 mCurrentCity = createCityFromPlace(place);
                 setCityName(mCurrentCity.getName());
                 invalidateOptionsMenu();
+                clearUIContent();
                 loadDataFromInterNet(mCurrentCity);
-            } else {
+            } else if (mCurrentCity == null) {
                 finish();
             }
         }
+    }
+
+    private void clearUIContent() {
+        setRecommendedPlacesVisibility();
+        mInterestsAdapter.setInterests(null);
+        mInterestsAdapter.notifyDataSetChanged();
+        mGalleryAdapter = new CustomGalleryPagerAdapter(this);
+        mGallery.setAdapter(mGalleryAdapter);
     }
 
     private City createCityFromPlace(Place place) {
@@ -284,8 +296,8 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private void updateGalleryAdapter(List<PhotoResponse> images) {
         if (images != null && !images.isEmpty()) {
-            mAdapter.setImages(images);
-            mAdapter.notifyDataSetChanged();
+            mGalleryAdapter.setImages(images);
+            mGalleryAdapter.notifyDataSetChanged();
             if (!isGalleryTouched) {
                 setAutoScroll();
             }
