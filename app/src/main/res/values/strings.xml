@@ -10,4 +10,5 @@
     <string name="error_message">Something went wrong.Please try again</string>
     <string name="dialog_confirm">OK</string>
     <string name="rating_raw">Rating:</string>
+    <string name="recommended_places">Recommended Places</string>
 </resources>

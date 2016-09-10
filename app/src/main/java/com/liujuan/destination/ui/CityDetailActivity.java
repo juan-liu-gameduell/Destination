@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -63,7 +64,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private CustomGalleryPagerAdapter mAdapter;
     private InterestsAdapter mInterestsAdapter;
     private boolean isGalleryTouched;
-
+    private TextView recommendedPlaces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class CityDetailActivity extends AppCompatActivity {
         setToolBar();
         setToolBarUpButton();
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
+        recommendedPlaces = (TextView) findViewById(R.id.recommened_place_text);
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
@@ -84,14 +86,16 @@ public class CityDetailActivity extends AppCompatActivity {
                 callPlaceAutocompleteActivityIntent();
             }
         }
+
         mAdapter = new CustomGalleryPagerAdapter(this);
         mGallery.setAdapter(mAdapter);
         mGallery.setOnTouchListener(createGalleryTouchListener());
         setInterestRecyclerView();
         mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         mHandler = new Handler();
-        updateCityName();
+        setRecommendedPlacesVisibility();
         if (mCurrentCity != null) {
+            setCityName(mCurrentCity.getName());
             updateGalleryAdapter(mCurrentCity.getImages());
         }
     }
@@ -139,12 +143,6 @@ public class CityDetailActivity extends AppCompatActivity {
                 index = 0;
             }
             mGallery.setCurrentItem(index, true);
-        }
-    }
-
-    private void updateCityName() {
-        if (mCurrentCity != null) {
-            setCityName(mCurrentCity.getName());
         }
     }
 
@@ -258,7 +256,7 @@ public class CityDetailActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(this, data);
                 mCurrentCity = createCityFromPlace(place);
-                updateCityName();
+                setCityName(mCurrentCity.getName());
                 invalidateOptionsMenu();
                 loadDataFromInterNet(mCurrentCity);
             } else {
@@ -325,7 +323,6 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
-
         @Override
         protected PlaceResponse doInBackground(City... params) {
             Log.i(TAG, "fetching places of interest of a city");
@@ -347,7 +344,7 @@ public class CityDetailActivity extends AppCompatActivity {
             if (response == null || response.hasError()) {
                 showErrorDialog(response);
             } else {
-                List<InterestResponse> list = response.getIntests();
+                List<InterestResponse> list = response.getInterests();
 
                 Collections.sort(list, new Comparator<InterestResponse>() {
                     @Override
@@ -368,7 +365,16 @@ public class CityDetailActivity extends AppCompatActivity {
                 mCurrentCity.setInterests(list);
                 mInterestsAdapter.setInterests(mCurrentCity.getInterests());
                 mInterestsAdapter.notifyDataSetChanged();
+                setRecommendedPlacesVisibility();
             }
+        }
+    }
+
+    private void setRecommendedPlacesVisibility() {
+        if (mCurrentCity != null && mCurrentCity.getInterests() != null && !mCurrentCity.getInterests().isEmpty()) {
+            recommendedPlaces.setVisibility(View.VISIBLE);
+        } else {
+            recommendedPlaces.setVisibility(View.INVISIBLE);
         }
     }
 

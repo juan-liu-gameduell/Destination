@@ -34,7 +34,7 @@
                 android:id="@+id/recommened_place_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/recommened_places"
+                android:text="@string/recommended_places"
                 android:textSize="20sp"
                 android:visibility="invisible"/>
 

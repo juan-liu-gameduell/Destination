@@ -11,7 +11,7 @@ public class PlaceResponse extends GoogleApiResponse {
     @SerializedName("next_page_token")
     private String nextPageToken;
     @SerializedName("results")
-    private List<InterestResponse> intests;
+    private List<InterestResponse> interests;
 
     private PlaceResponse(String status, String errorMessage) {
         super(status, errorMessage);
@@ -21,7 +21,7 @@ public class PlaceResponse extends GoogleApiResponse {
         return nextPageToken;
     }
 
-    public List<InterestResponse> getIntests() {
-        return intests;
+    public List<InterestResponse> getInterests() {
+        return interests;
     }
 }
