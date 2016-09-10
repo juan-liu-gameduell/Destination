@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             SPAN_COUNT = 3;
         }
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(SPAN_COUNT, 50, true));
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(SPAN_COUNT, 40, true));
         mLayoutManager = new GridLayoutManager(this, SPAN_COUNT);
         mAdapter = new CityAdapter(mCities, this);
         mRecyclerView.setAdapter(mAdapter);

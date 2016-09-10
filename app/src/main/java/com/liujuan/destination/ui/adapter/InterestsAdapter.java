@@ -44,12 +44,14 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.View
         final InterestResponse interest = interests.get(position);
         holder.interestName.setText(interest.getName());
         holder.interestAddress.setText(interest.getAddress());
-        holder.interestRating.setText("Rating: " + interest.getRating());
+        String text = context.getResources().getString(R.string.rating_raw) + interest.getRating();
+        holder.interestRating.setText(text);
         if (interest.getPhotos() != null && !interest.getPhotos().isEmpty()) {
             String imageUrl = String.format(interest.getPhotos().get(0).getPhotoUrl(), photoWidthInPixel);
-            Picasso.with(context).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().centerCrop().into(holder.interestImage);
+            Picasso.with(context).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().into(holder.interestImage);
+        } else {
+            holder.interestImage.setImageResource(R.drawable.item_error);
         }
-
     }
 
     @Override

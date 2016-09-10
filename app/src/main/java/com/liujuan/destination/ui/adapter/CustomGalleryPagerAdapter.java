@@ -35,12 +35,11 @@ public class CustomGalleryPagerAdapter extends PagerAdapter {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View itemView = inflater.inflate(R.layout.activity_city_details_pager_item, container, false);
         ImageView imageView = (ImageView) itemView.findViewById(R.id.pager_item_image);
-        if (mImages == null || mImages.isEmpty()) {
-            imageView.setImageResource(R.drawable.item_error);
-        } else {
-            String photoUrl = String.format(mImages.get(position).getPhotoUrl(), container.getWidth());
-            Picasso.with(mContext).load(photoUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().centerCrop().into(imageView);
-        }
+        PhotoResponse photoResponse = mImages.get(position);
+        int max = Math.min(photoResponse.getWidth(), photoResponse.getHeight());
+        String photoUrl = String.format(mImages.get(position).getPhotoUrl(), max);
+        Picasso.with(mContext).load(photoUrl).placeholder(R.drawable.loading).error(R.drawable.item_error)
+                .fit().into(imageView);
         container.addView(itemView);
         return itemView;
     }
@@ -52,7 +51,7 @@ public class CustomGalleryPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mImages == null ? 1 : mImages.size();
+        return mImages == null ? 0 : mImages.size();
     }
 
     @Override

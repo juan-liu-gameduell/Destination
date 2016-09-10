@@ -25,6 +25,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.liujuan.destination.R;
 import com.liujuan.destination.dto.InterestResponse;
+import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.dto.PhotosAndIntroOfCityResponse;
 import com.liujuan.destination.dto.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
@@ -51,6 +52,7 @@ public class CityDetailActivity extends AppCompatActivity {
     public static final String CURRENT_CITY = "currentCity";
     public static final String KET_FAVORITE_CITIES = "Favorite cities";
     private static final String TAG = "CityDetailActivity";
+    public static final String IS_GALLERY_TOUCHED = "isGalleryTouched";
     private RecyclerView mInterestRecyclerView;
     private City mCurrentCity;
     private Handler mHandler;
@@ -60,6 +62,8 @@ public class CityDetailActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private CustomGalleryPagerAdapter mAdapter;
     private InterestsAdapter mInterestsAdapter;
+    private boolean isGalleryTouched;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
+            isGalleryTouched = savedInstanceState.getBoolean(IS_GALLERY_TOUCHED);
         } else {
             if (getIntent().hasExtra(CityAdapter.EXTRA_CITY)) {
                 mCurrentCity = getIntent().getParcelableExtra(CityAdapter.EXTRA_CITY);
@@ -81,12 +86,28 @@ public class CityDetailActivity extends AppCompatActivity {
         }
         mAdapter = new CustomGalleryPagerAdapter(this);
         mGallery.setAdapter(mAdapter);
+        mGallery.setOnTouchListener(createGalleryTouchListener());
         setInterestRecyclerView();
         mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
         mHandler = new Handler();
         updateCityName();
-        updateGalleryAdapter(mCurrentCity);
-        setAutoScroll();
+        if (mCurrentCity != null) {
+            updateGalleryAdapter(mCurrentCity.getImages());
+        }
+    }
+
+    @NonNull
+    private View.OnTouchListener createGalleryTouchListener() {
+        return new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    isGalleryTouched = true;
+                    mHandler.removeCallbacks(mRunnable);
+                }
+                return false;
+            }
+        };
     }
 
     private void setInterestRecyclerView() {
@@ -128,18 +149,21 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void setAutoScroll() {
+        if (mRunnable != null) {
+            mHandler.removeCallbacks(mRunnable);
+        }
         mRunnable = new Runnable() {
             @Override
             public void run() {
                 if (!isPaused) {
                     autoScrollGallery();
                 }
-                if (!CityDetailActivity.this.isFinishing()) {
+                if (!CityDetailActivity.this.isFinishing() && !isGalleryTouched) {
                     mHandler.postDelayed(mRunnable, 2500);
                 }
             }
         };
-        mHandler.postDelayed(mRunnable, 1000);
+        mHandler.postDelayed(mRunnable, 2500);
     }
 
     private void setToolBarUpButton() {
@@ -153,6 +177,7 @@ public class CityDetailActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putParcelable(CURRENT_CITY, mCurrentCity);
+        outState.putBoolean(IS_GALLERY_TOUCHED, isGalleryTouched);
         super.onSaveInstanceState(outState);
     }
 
@@ -259,10 +284,13 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void updateGalleryAdapter(City city) {
-        if (city != null) {
-            mAdapter.setImages(city.getImages());
+    private void updateGalleryAdapter(List<PhotoResponse> images) {
+        if (images != null && !images.isEmpty()) {
+            mAdapter.setImages(images);
             mAdapter.notifyDataSetChanged();
+            if (!isGalleryTouched) {
+                setAutoScroll();
+            }
         }
     }
 
@@ -287,7 +315,7 @@ public class CityDetailActivity extends AppCompatActivity {
             if (response != null) {
                 mCurrentCity.setImages(response.getPhotos());
                 mCurrentCity.setUrl(response.getIntroductionUrl());
-                updateGalleryAdapter(mCurrentCity);
+                updateGalleryAdapter(response.getPhotos());
             }
         }
     }

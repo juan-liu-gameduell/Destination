@@ -48,7 +48,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
 
         List<PhotoResponse> images = city.getImages();
         if (images != null && !images.isEmpty()) {
-            Picasso.with(context).load(images.get(0).getPhotoUrl()).resize(photoWidth, photoWidth).centerCrop().into(holder.cityImage);
+            Picasso.with(context).load(images.get(0).getPhotoUrl()).fit().into(holder.cityImage);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
