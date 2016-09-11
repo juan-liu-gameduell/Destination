@@ -22,26 +22,26 @@ import java.util.List;
 /**
  * Created by Administrator on 2016/9/4.
  */
-public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder> {
+public class HotCityAdapter extends RecyclerView.Adapter<HotCityAdapter.ViewHolder> {
 
     public static final String EXTRA_CITY = "city";
     private ArrayList<City> mCities;
     private int photoWidth;
 
-    public CityAdapter(ArrayList<City> cityiesData, Context context) {
+    public HotCityAdapter(ArrayList<City> cityiesData, Context context) {
         mCities = cityiesData;
         photoWidth = (int) LayoutUtil.convertDpToPixel(160, context);
     }
 
     @Override
-    public CityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.destination_city_recyclerview_item, parent, false);
+    public HotCityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hot_city_recyclerview_item, parent, false);
 
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(CityAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(HotCityAdapter.ViewHolder holder, int position) {
         final City city = mCities.get(position);
         holder.cityName.setText(city.getName());
         final Context context = holder.cityImage.getContext();

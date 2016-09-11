@@ -1,123 +1,88 @@
 package com.liujuan.destination.ui;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.vo.City;
-import com.liujuan.destination.dto.PhotoResponse;
-import com.liujuan.destination.ui.adapter.CityAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<City> mCities;
+    public static final String KEY_CURRENT_DRAWER_ITEM_INDEX = "drawerItemIndex";
+
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
+    private Toolbar mToolBar;
+    private DrawerManager mDrawerManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mockCities();
-        mRecyclerView = (RecyclerView) findViewById(R.id.destination_city_recyclerview);
+        mToolBar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
 
-
-        setupRecyclerView();
-        setupToolBar();
-
-        mTitle = mDrawerTitle = getTitle();
+        mDrawerManager = new DrawerManager(this, findViewById(R.id.left_drawer));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, (Toolbar) findViewById(R.id.toolbar),
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolBar,
                 R.string.drawer_open, R.string.drawer_close) {
 
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
 
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                invalidateOptionsMenu();
             }
         };
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-    }
-
-    private void setupRecyclerView() {
-        mRecyclerView.setHasFixedSize(true);
-
-        Configuration config = getResources().getConfiguration();
-        int SPAN_COUNT = 2;
-        if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            SPAN_COUNT = 3;
+        if (savedInstanceState == null) {
+            selectItem(0);
+        } else {
+            int index = savedInstanceState.getInt(KEY_CURRENT_DRAWER_ITEM_INDEX);
+            mDrawerManager.setCurrentItemIndex(index);
+            setTitle(mDrawerManager.getCurrentTitle());
         }
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(SPAN_COUNT, 40, true));
-        mLayoutManager = new GridLayoutManager(this, SPAN_COUNT);
-        mAdapter = new CityAdapter(mCities, this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
-    private void setupToolBar() {
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
-        getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void mockCities() {
-        mCities = new ArrayList<>();
-
-        List<PhotoResponse> images = new ArrayList<>();
-        images.add(new PhotoResponse(500, 500, "http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg"));
-        City berlin = new City("Berlin");
-        berlin.setImages(images);
-        mCities.add(berlin);
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_CURRENT_DRAWER_ITEM_INDEX, mDrawerManager.getCurrentIndex());
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar_main, menu);
-
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         if (item.getItemId() == R.id.actionbar_search) {
             startCityDetailActivity();
         }
@@ -125,20 +90,91 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startCityDetailActivity() {
-        Intent intent = new Intent(this, CityDetailActivity.class);
-        startActivity(intent);
-
+        startActivity(new Intent(this, CityDetailActivity.class));
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+    @Override
+    public void setTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+
+    @Override
+    public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    private boolean isNavDrawerOpen() {
+        return mDrawerLayout != null && mDrawerLayout.isDrawerOpen(GravityCompat.START);
+    }
+
+    private void closeNavDrawer() {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         }
     }
 
-    private void selectItem(int position) {
+    void selectItem(final int position) {
         Log.i(TAG, "select postion is:" + position);
+
+        setTitle(mDrawerManager.getCurrentTitle());
+        switch (position) {
+            case 0:
+                showMainFragment();
+                break;
+            case 1:
+                showFavoriteCitiesFragment();
+                break;
+            default:
+                throw new IllegalArgumentException("unsupported position in DrawerLayout List:" + position);
+        }
+        mDrawerLayout.closeDrawers();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (getFavoriteFragment() != null && !isNavDrawerOpen()) {
+                returnToHome();
+                return true;
+            } else if (isNavDrawerOpen()) {
+                closeNavDrawer();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private Fragment getFavoriteFragment() {
+        return getFragmentManager().findFragmentByTag(FavoriteFragment.TAG);
+    }
+
+    private void returnToHome() {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.popBackStack();
+        mDrawerManager.setCurrentItemIndex(0);
+        setTitle(mDrawerManager.getCurrentTitle());
+    }
+
+    private void showFavoriteCitiesFragment() {
+        FragmentManager fm = getFragmentManager();
+        String tag = FavoriteFragment.TAG;
+        Fragment fragment = new FavoriteFragment();
+        fm.beginTransaction().replace(R.id.content_frame, fragment, tag)
+                .addToBackStack(null).commit();
+    }
+
+    private void showMainFragment() {
+        FragmentManager fm = getFragmentManager();
+        String tag = MainFragment.TAG;
+        Fragment fragment = new MainFragment();
+        fm.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
+    }
 }

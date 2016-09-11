@@ -16,4 +16,8 @@
     <string name="install_map_message">Google map is not installed. Please install it to display this place</string>
     <string name="install_map_title">Install Google map</string>
     <string name="cancel">Cancel</string>
+    <string name="hot_spots">Hot Cities</string>
+    <string name="favorite_city">Favorite cities</string>
+    <string name="home">Home</string>
+    <string name="favorite">Favorite</string>
 </resources>

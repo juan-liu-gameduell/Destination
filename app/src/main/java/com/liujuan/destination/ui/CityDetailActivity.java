@@ -1,11 +1,11 @@
 package com.liujuan.destination.ui;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -31,8 +31,8 @@ import com.liujuan.destination.dto.PhotosAndIntroOfCityResponse;
 import com.liujuan.destination.dto.PlaceResponse;
 import com.liujuan.destination.net.NetClient;
 import com.liujuan.destination.net.SearchService;
-import com.liujuan.destination.ui.adapter.CityAdapter;
 import com.liujuan.destination.ui.adapter.CustomGalleryPagerAdapter;
+import com.liujuan.destination.ui.adapter.HotCityAdapter;
 import com.liujuan.destination.ui.adapter.InterestsAdapter;
 import com.liujuan.destination.vo.City;
 
@@ -80,8 +80,8 @@ public class CityDetailActivity extends AppCompatActivity {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
             isGalleryTouched = savedInstanceState.getBoolean(IS_GALLERY_TOUCHED);
         } else {
-            if (getIntent().hasExtra(CityAdapter.EXTRA_CITY)) {
-                mCurrentCity = getIntent().getParcelableExtra(CityAdapter.EXTRA_CITY);
+            if (getIntent().hasExtra(HotCityAdapter.EXTRA_CITY)) {
+                mCurrentCity = getIntent().getParcelableExtra(HotCityAdapter.EXTRA_CITY);
             } else {
                 callPlaceAutocompleteActivityIntent();
             }
@@ -91,7 +91,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mGallery.setAdapter(mGalleryAdapter);
         mGallery.setOnTouchListener(createGalleryTouchListener());
         setInterestRecyclerView();
-        mSharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mHandler = new Handler();
         setRecommendedPlacesVisibility();
         if (mCurrentCity != null) {
