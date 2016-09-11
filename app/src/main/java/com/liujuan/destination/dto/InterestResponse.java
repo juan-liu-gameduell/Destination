@@ -59,6 +59,10 @@ public class InterestResponse implements Parcelable {
         return rating;
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
     public String getAddress() {
         return address;
     }

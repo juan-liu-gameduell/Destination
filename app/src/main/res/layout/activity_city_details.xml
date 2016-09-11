@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
@@ -32,9 +31,11 @@
             </android.support.v4.view.ViewPager>
 
             <TextView
-                android:id="@+id/recommened_place_text"
+                android:id="@+id/recommended_place_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:text="@string/recommended_places"
                 android:textSize="20sp"
                 android:visibility="invisible"/>

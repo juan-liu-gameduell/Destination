@@ -1,6 +1,9 @@
 package com.liujuan.destination.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import com.liujuan.destination.R;
 import com.liujuan.destination.dto.InterestResponse;
+import com.liujuan.destination.ui.InstallGoogleMapDialog;
 import com.liujuan.destination.utl.LayoutUtil;
 import com.squareup.picasso.Picasso;
 
@@ -52,6 +56,19 @@ public class InterestsAdapter extends RecyclerView.Adapter<InterestsAdapter.View
         } else {
             holder.interestImage.setImageResource(R.drawable.item_error);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri location = Uri.parse("geo:" + interest.getLocation().getLat() + "," + interest.getLocation().getLng() + "?q=" + interest.getName() + "&z=14");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(context.getPackageManager()) != null) {
+                    context.startActivity(mapIntent);
+                } else {
+                    InstallGoogleMapDialog.showDialog(((Activity) context).getFragmentManager());
+                }
+            }
+        });
     }
 
     @Override

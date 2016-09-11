@@ -74,7 +74,7 @@ public class CityDetailActivity extends AppCompatActivity {
         setToolBar();
         setToolBarUpButton();
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
-        recommendedPlaces = (TextView) findViewById(R.id.recommened_place_text);
+        recommendedPlaces = (TextView) findViewById(R.id.recommended_place_text);
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);

@@ -23,7 +23,7 @@ public interface SearchService {
 //    String API_KEY = "AIzaSyAZWIfu7DblfR0UljR3GzP-PQNfrW8NMgc";
 //    String API_KEY = "AIzaSyD3ymVLGpr0Q_v7H5dIx0Ef2s2px3DYNFI";
 
-    @GET("maps/api/place/nearbysearch/json?rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium&sensor=false&key=" + API_KEY)
+    @GET("maps/api/place/nearbysearch/json?rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium|synagogue|place_of_worship|mosque&sensor=false&key=" + API_KEY)
     Call<PlaceResponse> searchNearbyPointsOfInterest(@Query("location") String location,
                                                      @Query("radius") int radius);
 

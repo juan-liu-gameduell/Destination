@@ -9,6 +9,11 @@
     <string name="error_title">Error happened</string>
     <string name="error_message">Something went wrong.Please try again</string>
     <string name="dialog_confirm">OK</string>
+    <string name="dialog_install_map">Get map</string>
     <string name="rating_raw">Rating:</string>
     <string name="recommended_places">Recommended Places</string>
+    <string name="map_chooser_title">Display it on Google map</string>
+    <string name="install_map_message">Google map is not installed. Please install it to display this place</string>
+    <string name="install_map_title">Install Google map</string>
+    <string name="cancel">Cancel</string>
 </resources>
