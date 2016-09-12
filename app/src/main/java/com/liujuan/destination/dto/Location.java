@@ -5,10 +5,13 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class Location implements Parcelable {
+public class Location implements Parcelable, Serializable {
+    static final long serialVersionUID = 1L;
     @SerializedName("lat")
     private double lat;
     @SerializedName("lng")

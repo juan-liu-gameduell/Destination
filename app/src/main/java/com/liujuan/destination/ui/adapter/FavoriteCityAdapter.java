@@ -2,6 +2,7 @@ package com.liujuan.destination.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,7 @@ public class FavoriteCityAdapter extends RecyclerView.Adapter<FavoriteCityAdapte
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CityDetailActivity.class);
-                intent.putExtra(EXTRA_CITY, city);
+                intent.putExtra(EXTRA_CITY, (Parcelable) city);
                 context.startActivity(intent);
             }
         });

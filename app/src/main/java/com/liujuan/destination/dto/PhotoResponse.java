@@ -5,10 +5,13 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class PhotoResponse implements Parcelable {
+public class PhotoResponse implements Parcelable,Serializable {
+    static final long serialVersionUID = 1L;
     @SerializedName("height")
     private int height;
     @SerializedName("width")

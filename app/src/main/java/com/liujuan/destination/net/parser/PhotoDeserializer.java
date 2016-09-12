@@ -27,7 +27,6 @@ public class PhotoDeserializer implements JsonDeserializer<PhotoResponse> {
         int height = jsonObject.get("height").getAsInt();
         int width = jsonObject.get("width").getAsInt();
         String reference = jsonObject.get("photo_reference").getAsString();
-//        String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%d&photoreference=" + reference + "&key=";// + SearchService.API_KEY;
         String url = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=%d&photoreference=" + reference + "&key=" + SearchService.API_KEY;
 
         return new PhotoResponse(height, width, url);

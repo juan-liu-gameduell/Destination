@@ -5,12 +5,14 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/7.
  */
-public class InterestResponse implements Parcelable {
+public class InterestResponse implements Parcelable, Comparable<InterestResponse>, Serializable {
+    static final long serialVersionUID = 1L;
     @SerializedName("place_id")
     private String id;
     @SerializedName("name")
@@ -96,5 +98,17 @@ public class InterestResponse implements Parcelable {
         dest.writeString(address);
         dest.writeTypedList(photos);
         dest.writeParcelable(location, flags);
+    }
+
+    @Override
+    public int compareTo(InterestResponse rhs) {
+        if (rhs == null) return -1;
+        if (getRating() > rhs.getRating()) {
+            return -1;
+        } else if (getRating() < rhs.getRating()) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 }

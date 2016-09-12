@@ -8,13 +8,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.ui.adapter.HotCityAdapter;
 import com.liujuan.destination.vo.City;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,9 +23,10 @@ public class MainFragment extends Fragment {
 
     public static final String TAG = "MainFragment";
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private HotCityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<City> mCities;
+    private List<City> mCities;
+    private ProgressBar mProgressBar;
 
     public MainFragment() {
     }
@@ -34,15 +34,36 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mockCities();
+    }
+
+    public void setCities(List<City> cities) {
+        this.mCities = cities;
+        if (mCities != null && !mCities.isEmpty()) {
+            updateVisibility(true);
+            mAdapter.setCities(mCities);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void updateVisibility(boolean recyclerViewVisible) {
+        if (recyclerViewVisible) {
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mCities = ((MainActivity) getActivity()).getHotCities();
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         rootView.setTag(TAG);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_cities);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.destination_city_recyclerview);
         setupRecyclerView();
+        setCities(mCities);
         return rootView;
     }
 
@@ -61,15 +82,4 @@ public class MainFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
-
-    private void mockCities() {
-        mCities = new ArrayList<>();
-
-        List<PhotoResponse> images = new ArrayList<>();
-        images.add(new PhotoResponse(500, 500, "http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg"));
-        City berlin = new City("Berlin");
-        berlin.setImages(images);
-        mCities.add(berlin);
-    }
-
 }

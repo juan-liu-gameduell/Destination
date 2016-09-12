@@ -6,12 +6,14 @@ import android.os.Parcelable;
 import com.liujuan.destination.dto.InterestResponse;
 import com.liujuan.destination.dto.PhotoResponse;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/4.
  */
-public class City implements Parcelable {
+public class City implements Parcelable, Serializable {
+    static final long serialVersionUID = 1L;
     private String name;
     private List<PhotoResponse> images;
     private double longitude;

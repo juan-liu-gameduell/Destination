@@ -2,6 +2,7 @@ package com.liujuan.destination.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.vo.City;
 import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.ui.CityDetailActivity;
 import com.liujuan.destination.utl.LayoutUtil;
+import com.liujuan.destination.vo.City;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,12 +25,16 @@ import java.util.List;
 public class HotCityAdapter extends RecyclerView.Adapter<HotCityAdapter.ViewHolder> {
 
     public static final String EXTRA_CITY = "city";
-    private ArrayList<City> mCities;
+    private List<City> mCities;
     private int photoWidth;
 
-    public HotCityAdapter(ArrayList<City> cityiesData, Context context) {
-        mCities = cityiesData;
-        photoWidth = (int) LayoutUtil.convertDpToPixel(160, context);
+    public HotCityAdapter(List<City> citiesData, Context context) {
+        mCities = citiesData;
+        photoWidth = (int) LayoutUtil.convertDpToPixel(context.getResources().getDimension(R.dimen.destination_city_recyclerview_item_width), context);
+    }
+
+    public void setCities(List<City> cities) {
+        mCities = cities;
     }
 
     @Override
@@ -48,13 +52,16 @@ public class HotCityAdapter extends RecyclerView.Adapter<HotCityAdapter.ViewHold
 
         List<PhotoResponse> images = city.getImages();
         if (images != null && !images.isEmpty()) {
-            Picasso.with(context).load(images.get(0).getPhotoUrl()).fit().into(holder.cityImage);
+            String imageUrl = String.format(images.get(0).getPhotoUrl(), photoWidth);
+            Picasso.with(context).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().into(holder.cityImage);
+        }else {
+            holder.cityImage.setImageResource(R.drawable.item_error);
         }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, CityDetailActivity.class);
-                intent.putExtra(EXTRA_CITY, city);
+                intent.putExtra(EXTRA_CITY, (Parcelable) city);
                 context.startActivity(intent);
             }
         });
@@ -62,7 +69,7 @@ public class HotCityAdapter extends RecyclerView.Adapter<HotCityAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return mCities.size();
+        return mCities == null ? 0 : mCities.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

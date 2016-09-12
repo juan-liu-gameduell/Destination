@@ -38,7 +38,6 @@ import com.liujuan.destination.vo.City;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -315,7 +314,7 @@ public class CityDetailActivity extends AppCompatActivity {
             try {
                 return photosCall.execute().body();
             } catch (Exception e) {
-                Log.i(TAG, e.getMessage());
+                Log.i(TAG, "error happened when fetching cities: "+e.getMessage());
             }
             return null;
         }
@@ -357,23 +356,7 @@ public class CityDetailActivity extends AppCompatActivity {
                 showErrorDialog(response);
             } else {
                 List<InterestResponse> list = response.getInterests();
-
-                Collections.sort(list, new Comparator<InterestResponse>() {
-                    @Override
-                    public int compare(final InterestResponse lhs, InterestResponse rhs) {
-                        //TODO return 1 if rhs should be before lhs
-                        //     return -1 if lhs should be before rhs
-                        //     return 0 otherwise
-                        if (lhs.getRating() > rhs.getRating()) {
-                            return -1;
-                        } else if (lhs.getRating() < rhs.getRating()) {
-                            return 1;
-                        } else {
-                            return 0;
-                        }
-                    }
-                });
-
+                Collections.sort(list);
                 mCurrentCity.setInterests(list);
                 mInterestsAdapter.setInterests(mCurrentCity.getInterests());
                 mInterestsAdapter.notifyDataSetChanged();

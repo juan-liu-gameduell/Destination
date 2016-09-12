@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="city_ids">
+        <item>ChIJOwg_06VPwokRYv534QaPC8g</item>
+        <item>ChIJIQBpAG2ahYAR_6128GcTUEo</item>
+        <item>ChIJdd4hrwug2EcRmSrV3Vo6llI</item>
+        <item>ChIJD7fiBh9u5kcRYJSMaMOCCwQ</item>
+        <item>ChIJAVkDPzdOqEcRcDteW0YgIQQ</item>
+        <item>ChIJXSModoWLGGARILWiCfeu2M0</item>
+        <item>ChIJByjqov3-AzQR2pT0dDW0bUg</item>
+        <item>ChIJVXealLU_xkcRja_At0z9AGY</item>
+        <item>ChIJuSwU55ZS8DURiqkPryBWYrk</item>
+        <item>ChIJP5iLHkCuEmsRwMwyFmh9AQU</item>
+        <item>ChIJu46S-ZZhLxMROG5lkwZ3D7k</item>
+        <item>ChIJ5TCOcRaYpBIRCmZHTz37sEQ</item>
+        <item>ChIJi3lwCZyTC0cRkEAWZg-vAAQ</item>
+        <item>ChIJE9on3F3HwoAR9AhGJW_fL-I</item>
+        <item>ChIJ0X31pIK3voARo3mz1ebVzDo</item>
+        <item>ChIJ2V-Mo_l1nkcRfZixfUq4DAE</item>
+        <item>ChIJyY4rtGcX2jERIKTarqz3AAQ</item>
+        <item>ChIJMzz1sUBwsjURoWTDI5QSlQI</item>
+    </string-array>
+</resources>

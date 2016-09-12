@@ -2,8 +2,12 @@ package com.liujuan.destination.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,15 +21,33 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.liujuan.destination.R;
+import com.liujuan.destination.service.InitializeService;
+import com.liujuan.destination.vo.City;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final String KEY_CURRENT_DRAWER_ITEM_INDEX = "drawerItemIndex";
+    public static final String KEY_HOT_CITIES = "HotCities";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private Toolbar mToolBar;
     private DrawerManager mDrawerManager;
+    private ArrayList<City> mHotCities;
+    private BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(InitializeService.ACTION_DEFAULT_CITIES_READY)) {
+                mHotCities = intent.getParcelableArrayListExtra(InitializeService.EXTRA_CITIES);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("MainFragmentCities", mHotCities);
+                MainFragment mainFragment = (MainFragment) getFragmentManager().findFragmentByTag(MainFragment.TAG);
+                mainFragment.setCities(mHotCities);
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +83,25 @@ public class MainActivity extends AppCompatActivity {
             int index = savedInstanceState.getInt(KEY_CURRENT_DRAWER_ITEM_INDEX);
             mDrawerManager.setCurrentItemIndex(index);
             setTitle(mDrawerManager.getCurrentTitle());
+            mHotCities = savedInstanceState.getParcelableArrayList(KEY_HOT_CITIES);
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mBroadcastReceiver, new IntentFilter(InitializeService.ACTION_DEFAULT_CITIES_READY));
+
+        Intent service = new Intent(this, InitializeService.class);
+        service.setAction(InitializeService.ACTION_PREPARE_DEFAULT_CITIES);
+        startService(service);
+    }
+
+    public ArrayList<City> getHotCities() {
+        return mHotCities;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_CURRENT_DRAWER_ITEM_INDEX, mDrawerManager.getCurrentIndex());
+        outState.putParcelableArrayList(KEY_HOT_CITIES, mHotCities);
     }
 
     @Override
@@ -75,6 +109,12 @@ public class MainActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -106,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void selectItem(final int position) {
-        Log.i(TAG, "select postion is:" + position);
-
         setTitle(mDrawerManager.getCurrentTitle());
         switch (position) {
             case 0:

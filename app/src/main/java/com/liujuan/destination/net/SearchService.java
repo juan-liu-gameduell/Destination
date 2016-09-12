@@ -1,6 +1,7 @@
 package com.liujuan.destination.net;
 
 import com.google.gson.GsonBuilder;
+import com.liujuan.destination.dto.CityResponse;
 import com.liujuan.destination.dto.Location;
 import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.dto.PhotosAndIntroOfCityResponse;
@@ -19,16 +20,20 @@ import retrofit2.http.Query;
 
 public interface SearchService {
 
-    String API_KEY = "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
+//    String API_KEY = "AIzaSyCIxYdbwTn7InxBxJw0fv5lHj_QCdiVD98";
 //    String API_KEY = "AIzaSyAZWIfu7DblfR0UljR3GzP-PQNfrW8NMgc";
-//    String API_KEY = "AIzaSyD3ymVLGpr0Q_v7H5dIx0Ef2s2px3DYNFI";
+    String API_KEY = "AIzaSyD3ymVLGpr0Q_v7H5dIx0Ef2s2px3DYNFI";
 
-    @GET("maps/api/place/nearbysearch/json?rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium|synagogue|place_of_worship|mosque&sensor=false&key=" + API_KEY)
+    @GET("maps/api/place/nearbysearch/json?rankby=prominence&types=park|church|city_hall|zoo|museum|movie_theater|local_government_office|library|amusement_park|aquarium|art_gallery|hindu_temple|stadium|synagogue|place_of_worship|mosque|university|cemetery|casino&sensor=false&key=" + API_KEY)
     Call<PlaceResponse> searchNearbyPointsOfInterest(@Query("location") String location,
                                                      @Query("radius") int radius);
 
     @GET("maps/api/place/details/json?key=" + API_KEY)
     Call<PhotosAndIntroOfCityResponse> searchPhotosOfCity(@Query("placeid") String id);
+
+
+    @GET("maps/api/place/details/json?key=" + API_KEY)
+    Call<CityResponse> queryDetailsOfCity(@Query("placeid") String id);
 
     class Factory {
         public static SearchService create() {
