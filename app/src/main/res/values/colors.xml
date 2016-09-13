@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/skyBlue</color>
+    <color name="colorPrimaryDark">#88006080</color>
     <color name="colorAccent">#FF4081</color>
     <color name="translucent_grey">#55000000</color>
     <color name="white">#ffffff</color>
-    <color name="skyBlue">#00B2EE</color>
+    <color name="skyBlue">#0099cc</color>
     <color name="drawer_item_selected">#33f6f6f6</color>
 </resources>

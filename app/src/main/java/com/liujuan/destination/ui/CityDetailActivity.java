@@ -71,7 +71,6 @@ public class CityDetailActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_city_details);
         setToolBar();
-        setToolBarUpButton();
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
@@ -161,12 +160,10 @@ public class CityDetailActivity extends AppCompatActivity {
         mHandler.postDelayed(mRunnable, 2500);
     }
 
-    private void setToolBarUpButton() {
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
     private void setToolBar() {
-        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
