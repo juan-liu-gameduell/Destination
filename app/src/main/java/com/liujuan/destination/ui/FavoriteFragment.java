@@ -1,26 +1,17 @@
 package com.liujuan.destination.ui;
 
 import android.app.Fragment;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.liujuan.destination.R;
-import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.ui.adapter.FavoriteCityAdapter;
-import com.liujuan.destination.vo.City;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2016/9/11.
@@ -28,33 +19,35 @@ import java.util.Set;
 public class FavoriteFragment extends Fragment {
     public static final String TAG = "FavoriteFragment";
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private FavoriteCityAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<City> mCities;
+    private ProgressBar mProgressBar;
+    private MainActivity mMainActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mockCities();
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        Set<String> favoriteCities = preferences.getStringSet(CityDetailActivity.KET_FAVORITE_CITIES, new HashSet<String>());
-        mCities = new ArrayList<>();
-//        mCities.add
-        Log.i(TAG, favoriteCities.size() + "");
+        mMainActivity = (MainActivity) getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
         rootView.setTag(TAG);
+        mProgressBar = (ProgressBar) rootView.findViewById(R.id.loading_favorite_cities);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.destination_city_favorite_recyclerview);
-        setupRecyclerView();
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setupRecyclerView();
+        updateAdapter();
     }
 
     private void setupRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
-
         Configuration config = getResources().getConfiguration();
         int SPAN_COUNT = 2;
         if (config.orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -62,18 +55,26 @@ public class FavoriteFragment extends Fragment {
         }
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(SPAN_COUNT, 40, true));
         mLayoutManager = new GridLayoutManager(getActivity(), SPAN_COUNT);
-        mAdapter = new FavoriteCityAdapter(mCities, getActivity());
+        mAdapter = new FavoriteCityAdapter(((MainActivity) getActivity()).getFavoriteCities(), getActivity());
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(mLayoutManager);
     }
 
-    private void mockCities() {
-        mCities = new ArrayList<>();
+    private void updateVisibility(boolean recyclerViewVisible) {
+        if (recyclerViewVisible) {
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        }
+    }
 
-        List<PhotoResponse> images = new ArrayList<>();
-        images.add(new PhotoResponse(500, 500, "http://www.planetware.com/photos-large/D/east-berlin-former-0.jpg"));
-        City berlin = new City("Berlin");
-        berlin.setImages(images);
-        mCities.add(berlin);
+    public void updateAdapter() {
+        if (mAdapter != null) {
+            updateVisibility(mMainActivity.getFavoriteCities() != null);
+            mAdapter.setCities(((MainActivity) getActivity()).getFavoriteCities());
+            mAdapter.notifyDataSetChanged();
+        }
     }
 }

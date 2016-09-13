@@ -8,6 +8,6 @@
                                    app:titleTextAppearance="@style/ToolbarTitle"
                                    android:elevation="4dp"
                                    android:minHeight="?attr/actionBarSize"
-                                   app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                                   android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 </android.support.v7.widget.Toolbar>

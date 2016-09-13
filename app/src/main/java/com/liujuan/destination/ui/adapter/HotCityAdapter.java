@@ -40,7 +40,6 @@ public class HotCityAdapter extends RecyclerView.Adapter<HotCityAdapter.ViewHold
     @Override
     public HotCityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.hot_city_recyclerview_item, parent, false);
-
         return new ViewHolder(view);
     }
 

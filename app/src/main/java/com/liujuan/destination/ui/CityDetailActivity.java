@@ -34,6 +34,7 @@ import com.liujuan.destination.net.SearchService;
 import com.liujuan.destination.ui.adapter.CustomGalleryPagerAdapter;
 import com.liujuan.destination.ui.adapter.HotCityAdapter;
 import com.liujuan.destination.ui.adapter.InterestsAdapter;
+import com.liujuan.destination.utl.ReaderAndWriterCityUtil;
 import com.liujuan.destination.vo.City;
 
 import java.io.IOException;
@@ -64,6 +65,7 @@ public class CityDetailActivity extends AppCompatActivity {
     private InterestsAdapter mInterestsAdapter;
     private boolean isGalleryTouched;
     private TextView recommendedPlaces;
+    private SimpleDialogWithoutConfirmButton mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +129,7 @@ public class CityDetailActivity extends AppCompatActivity {
         boolean isFavorite = false;
         if (mCurrentCity != null && mSharedPreferences.contains(KET_FAVORITE_CITIES)) {
             Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
-            isFavorite = favoriteCities.contains(mCurrentCity.getName());
+            isFavorite = favoriteCities.contains(mCurrentCity.getId());
         }
         return isFavorite;
     }
@@ -212,12 +214,12 @@ public class CityDetailActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_favorite:
                 boolean isFavorite = !readIsFavorite();
-                writeFavorite(isFavorite);
                 if (isFavorite) {
                     item.setIcon(R.drawable.ic_favorite_black_36dp);
                 } else {
                     item.setIcon(R.drawable.ic_favorite_white_36dp);
                 }
+                writeFavorite(isFavorite);
                 return true;
             case R.id.actionbar_search:
                 callPlaceAutocompleteActivityIntent();
@@ -230,11 +232,29 @@ public class CityDetailActivity extends AppCompatActivity {
     private void writeFavorite(boolean isFavorite) {
         Set<String> favoriteCities = mSharedPreferences.getStringSet(KET_FAVORITE_CITIES, new HashSet<String>());
         if (isFavorite) {
-            favoriteCities.add(mCurrentCity.getName());
+            favoriteCities.add(mCurrentCity.getId());
+            if (!ReaderAndWriterCityUtil.isCitySavedInFile(mCurrentCity.getId(), this)) {
+                new SaveCityInFileTask().execute(mCurrentCity);
+                mDialog = SimpleDialogWithoutConfirmButton.showDialog(getFragmentManager(), "Saving data to offline,please wait");
+            }
         } else {
-            favoriteCities.remove(mCurrentCity.getName());
+            favoriteCities.remove(mCurrentCity.getId());
         }
         mSharedPreferences.edit().putStringSet(KET_FAVORITE_CITIES, favoriteCities).apply();
+    }
+
+    private class SaveCityInFileTask extends AsyncTask<City, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(City... params) {
+            ReaderAndWriterCityUtil.saveACity(params[0], getApplicationContext());
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean saved) {
+            mDialog.dismiss();
+        }
     }
 
     private void callPlaceAutocompleteActivityIntent() {
@@ -277,10 +297,9 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private City createCityFromPlace(Place place) {
-        City city = new City(place.getName().toString());
+        City city = new City(place.getName().toString(), place.getId());
         city.setLatitude(place.getLatLng().latitude);
         city.setLongitude(place.getLatLng().longitude);
-        city.setId(place.getId());
         return city;
     }
 
@@ -314,7 +333,7 @@ public class CityDetailActivity extends AppCompatActivity {
             try {
                 return photosCall.execute().body();
             } catch (Exception e) {
-                Log.i(TAG, "error happened when fetching cities: "+e.getMessage());
+                Log.i(TAG, "error happened when fetching cities: " + e.getMessage());
             }
             return null;
         }

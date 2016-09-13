@@ -18,14 +18,9 @@ import com.liujuan.destination.dto.CityResponse;
 import com.liujuan.destination.dto.InterestResponse;
 import com.liujuan.destination.dto.PlaceResponse;
 import com.liujuan.destination.net.SearchService;
+import com.liujuan.destination.utl.ReaderAndWriterCityUtil;
 import com.liujuan.destination.vo.City;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -36,10 +31,10 @@ import retrofit2.Call;
  * Created by Administrator on 2016/9/12.
  */
 public class InitializeService extends Service {
-    public static final String ACTION_PREPARE_DEFAULT_CITIES = "prepareDefaultCities";
+    public static final String ACTION_PREPARE_DEFAULT_CITIES = "PrepareDefaultAndFavoriteCities";
     private static final String TAG = "InitializeService";
     public static final String ACTION_DEFAULT_CITIES_READY = "DefaultCitiesReady";
-    public static final String EXTRA_CITIES = "cities";
+    public static final String EXTRA_HOT_CITIES = "hotCities";
     private ServiceHandler mServiceHandler;
     private String[] defaultCityIds;
 
@@ -77,66 +72,35 @@ public class InitializeService extends Service {
 
         @Override
         public void handleMessage(Message msg) {
-            ArrayList<City> cities = readOrDownloadCityDetails();
-            saveCities(cities);
-            sendNotification(cities);
+            ArrayList<City> hotCities = readOrDownloadAndSaveCityDetails();
+            sendHotCityNotification(hotCities);
             stopSelf(msg.arg1);
         }
     }
 
-    private void sendNotification(ArrayList<City> cities) {
+    private void sendHotCityNotification(ArrayList<City> cities) {
         Intent intent = new Intent(ACTION_DEFAULT_CITIES_READY);
-        intent.putParcelableArrayListExtra(EXTRA_CITIES, cities);
+        intent.putParcelableArrayListExtra(EXTRA_HOT_CITIES, cities);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    private void saveCities(List<City> cities) {
-        File dir = getFilesDir();
-        for (City city : cities) {
-            ObjectOutputStream oos = null;
-            try {
-                FileOutputStream fos = new FileOutputStream(new File(dir, city.getId()));
-                oos = new ObjectOutputStream(fos);
-                oos.writeObject(city);
-            } catch (IOException e) {
-                Log.e(TAG, "error happened when serializing city to file:" + e.getMessage());
-            } finally {
-                if (oos != null) {
-                    try {
-                        oos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
-    }
-
-    private City readCityFromFile(String id) {
-        ObjectInputStream objectInputStream = null;
-        try {
-            FileInputStream fileInputStream = new FileInputStream(new File(getFilesDir(), id));
-            objectInputStream = new ObjectInputStream(fileInputStream);
-            return (City) objectInputStream.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            Log.e(TAG, "error happened when reading city from file:" + e.getMessage());
-        }
-        return null;
-    }
-
-    private ArrayList<City> readOrDownloadCityDetails() {
+    private ArrayList<City> readOrDownloadAndSaveCityDetails() {
         SearchService searchService = SearchService.Factory.create();
         ArrayList<City> cities = new ArrayList<>(defaultCityIds.length);
         for (String id : defaultCityIds) {
             try {
-                City city = readCityFromFile(id);
+                City city = ReaderAndWriterCityUtil.readCityFromFile(id, this);
                 if (city == null) {
                     city = downloadCityDetails(searchService, id);
                     city.setInterests(downloadInterests(searchService, city));
+                    if (ReaderAndWriterCityUtil.saveACity(city, this)) {
+                        cities.add(city);
+                    }
+                } else {
+                    cities.add(city);
                 }
-                cities.add(city);
             } catch (Exception e) {
-                Log.i(TAG, "error happened when reading cities from file or downloading cities: "+e.getMessage());
+                Log.i(TAG, "error happened when reading cities from file or downloading cities: " + e.getMessage());
             }
         }
         return cities;
@@ -144,10 +108,10 @@ public class InitializeService extends Service {
 
     @NonNull
     private City downloadCityDetails(SearchService searchService, String id) throws java.io.IOException {
+        Log.i(TAG, "Downloading a city: " + id + " from internet");
         Call<CityResponse> cityResponseCall = searchService.queryDetailsOfCity(id);
         CityResponse cityResponse = cityResponseCall.execute().body();
-        City city = new City(cityResponse.getResultResponse().getName());
-        city.setId(id);
+        City city = new City(cityResponse.getResultResponse().getName(), id);
         city.setLatitude(cityResponse.getResultResponse().getLocation().getLat());
         city.setLongitude(cityResponse.getResultResponse().getLocation().getLng());
         city.setImages(cityResponse.getResultResponse().getPhotoResponseList());

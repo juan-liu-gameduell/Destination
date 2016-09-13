@@ -7,13 +7,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liujuan.destination.R;
+import com.liujuan.destination.dto.PhotoResponse;
 import com.liujuan.destination.ui.CityDetailActivity;
+import com.liujuan.destination.utl.LayoutUtil;
 import com.liujuan.destination.vo.City;
+import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by Administrator on 2016/9/4.
@@ -21,16 +26,15 @@ import java.util.ArrayList;
 public class FavoriteCityAdapter extends RecyclerView.Adapter<FavoriteCityAdapter.ViewHolder> {
 
     public static final String EXTRA_CITY = "city";
-    private ArrayList<City> mCities;
+    private List<City> mCities;
 
-    public FavoriteCityAdapter(ArrayList<City> citiesData, Context context) {
+    public FavoriteCityAdapter(List<City> citiesData, Context context) {
         mCities = citiesData;
     }
 
     @Override
     public FavoriteCityAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favorite_city_recyclerview_item, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -38,9 +42,16 @@ public class FavoriteCityAdapter extends RecyclerView.Adapter<FavoriteCityAdapte
     public void onBindViewHolder(FavoriteCityAdapter.ViewHolder holder, int position) {
         final City city = mCities.get(position);
         holder.cityName.setText(city.getName());
-        final Context context = holder.cityName.getContext();
+        final Context context = holder.cityImage.getContext();
 
-
+        List<PhotoResponse> images = city.getImages();
+        if (images != null && !images.isEmpty()) {
+            int photoWidth = (int) LayoutUtil.convertDpToPixel(context.getResources().getDimension(R.dimen.destination_city_recyclerview_item_width), context);
+            String imageUrl = String.format(images.get(0).getPhotoUrl(), photoWidth);
+            Picasso.with(context).load(imageUrl).placeholder(R.drawable.loading).error(R.drawable.item_error).fit().into(holder.cityImage);
+        } else {
+            holder.cityImage.setImageResource(R.drawable.item_error);
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,14 +64,20 @@ public class FavoriteCityAdapter extends RecyclerView.Adapter<FavoriteCityAdapte
 
     @Override
     public int getItemCount() {
-        return mCities.size();
+        return mCities == null ? 0 : mCities.size();
+    }
+
+    public void setCities(List<City> cities) {
+        mCities = cities;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView cityImage;
         private TextView cityName;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            cityImage = (ImageView) itemView.findViewById(R.id.favorite_city_image);
             cityName = (TextView) itemView.findViewById(R.id.favorite_city_name);
         }
     }

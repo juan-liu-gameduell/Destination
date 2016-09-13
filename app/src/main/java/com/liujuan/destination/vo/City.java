@@ -42,11 +42,10 @@ public class City implements Parcelable, Serializable {
         @Override
         public City createFromParcel(Parcel parcel) {
             String name = parcel.readString();
-            List<PhotoResponse> response = parcel.createTypedArrayList(PhotoResponse.CREATOR);
-            City object = new City(name);
+            City object = new City(name, parcel.readString());
             object.setLongitude(parcel.readDouble());
             object.setLatitude(parcel.readDouble());
-            object.setId(parcel.readString());
+            List<PhotoResponse> response = parcel.createTypedArrayList(PhotoResponse.CREATOR);
             object.setImages(response);
             object.setInterests(parcel.createTypedArrayList(InterestResponse.CREATOR));
             return object;
@@ -58,8 +57,9 @@ public class City implements Parcelable, Serializable {
         }
     };
 
-    public City(String name) {
+    public City(String name, String id) {
         this.name = name;
+        this.id = id;
     }
 
     public String getName() {
@@ -102,10 +102,10 @@ public class City implements Parcelable, Serializable {
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
         parcel.writeString(name);
-        parcel.writeTypedList(images);
+        parcel.writeString(id);
         parcel.writeDouble(longitude);
         parcel.writeDouble(latitude);
-        parcel.writeString(id);
+        parcel.writeTypedList(images);
         parcel.writeTypedList(interests);
     }
 
