@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -64,7 +63,6 @@ public class CityDetailActivity extends AppCompatActivity {
     private CustomGalleryPagerAdapter mGalleryAdapter;
     private InterestsAdapter mInterestsAdapter;
     private boolean isGalleryTouched;
-    private TextView recommendedPlaces;
     private SimpleDialogWithoutConfirmButton mDialog;
 
     @Override
@@ -75,7 +73,6 @@ public class CityDetailActivity extends AppCompatActivity {
         setToolBar();
         setToolBarUpButton();
         mGallery = (ViewPager) findViewById(R.id.city_details_gallery);
-        recommendedPlaces = (TextView) findViewById(R.id.recommended_place_text);
         mInterestRecyclerView = (RecyclerView) findViewById(R.id.city_details_points_of_interest);
         if (savedInstanceState != null) {
             mCurrentCity = savedInstanceState.getParcelable(CURRENT_CITY);
@@ -94,7 +91,6 @@ public class CityDetailActivity extends AppCompatActivity {
         setInterestRecyclerView();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mHandler = new Handler();
-        setRecommendedPlacesVisibility();
         if (mCurrentCity != null) {
             setCityName(mCurrentCity.getName());
             updateGalleryAdapter(mCurrentCity.getImages());
@@ -289,7 +285,6 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void clearUIContent() {
-        setRecommendedPlacesVisibility();
         mInterestsAdapter.setInterests(null);
         mInterestsAdapter.notifyDataSetChanged();
         mGalleryAdapter = new CustomGalleryPagerAdapter(this);
@@ -379,16 +374,7 @@ public class CityDetailActivity extends AppCompatActivity {
                 mCurrentCity.setInterests(list);
                 mInterestsAdapter.setInterests(mCurrentCity.getInterests());
                 mInterestsAdapter.notifyDataSetChanged();
-                setRecommendedPlacesVisibility();
             }
-        }
-    }
-
-    private void setRecommendedPlacesVisibility() {
-        if (mCurrentCity != null && mCurrentCity.getInterests() != null && !mCurrentCity.getInterests().isEmpty()) {
-            recommendedPlaces.setVisibility(View.VISIBLE);
-        } else {
-            recommendedPlaces.setVisibility(View.INVISIBLE);
         }
     }
 
