@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/skyBlue</color>
     <color name="colorPrimaryDark">#88006080</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#248f8f</color>
     <color name="translucent_grey">#55000000</color>
     <color name="white">#ffffff</color>
     <color name="skyBlue">#0099cc</color>
