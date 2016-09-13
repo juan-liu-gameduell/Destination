@@ -143,10 +143,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.actionbar_search) {
-            startCityDetailActivity();
+        switch (item.getItemId()) {
+            case R.id.actionbar_search:
+                startCityDetailActivity();
+                return true;
+            case R.id.actionbar_clear:
+                ReaderAndWriterCityUtil.clearFavoriteCities(this);
+                mFavoriteCities = ReaderAndWriterCityUtil.readFavoriteCities(this);
+                updateFavoriteFragmentByDataChange();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private void startCityDetailActivity() {

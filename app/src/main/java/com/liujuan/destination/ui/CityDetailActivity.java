@@ -170,7 +170,7 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     private void setToolBar() {
-        setSupportActionBar((Toolbar) findViewById(R.id.city_details_toolbar));
+        setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
     }
 
     @Override
@@ -202,9 +202,9 @@ public class CityDetailActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.actionbar_city_details, menu);
         boolean isFavorite = readIsFavorite();
         if (isFavorite) {
-            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_black_36dp);
+            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_star_black_24dp);
         } else {
-            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_favorite_white_36dp);
+            menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_star_white_24dp);
         }
         return true;
     }
@@ -215,9 +215,9 @@ public class CityDetailActivity extends AppCompatActivity {
             case R.id.action_favorite:
                 boolean isFavorite = !readIsFavorite();
                 if (isFavorite) {
-                    item.setIcon(R.drawable.ic_favorite_black_36dp);
+                    item.setIcon(R.drawable.ic_star_black_24dp);
                 } else {
-                    item.setIcon(R.drawable.ic_favorite_white_36dp);
+                    item.setIcon(R.drawable.ic_star_white_24dp);
                 }
                 writeFavorite(isFavorite);
                 return true;

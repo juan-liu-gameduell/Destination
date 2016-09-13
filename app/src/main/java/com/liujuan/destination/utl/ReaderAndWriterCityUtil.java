@@ -1,6 +1,7 @@
 package com.liujuan.destination.utl;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -82,6 +83,11 @@ public class ReaderAndWriterCityUtil {
             }
         }
         return cities;
+    }
+
+    public static void clearFavoriteCities(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        sharedPreferences.edit().clear().commit();
     }
 
     static void mergeFavoriteCities(ArrayList<City> oldFavoriteCities, Set<String> favoriteCityIds) {
