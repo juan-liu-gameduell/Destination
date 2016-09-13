@@ -2,6 +2,7 @@ package com.liujuan.destination.ui;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -193,17 +194,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if (getFavoriteFragment() != null && !isNavDrawerOpen()) {
+    public void onBackPressed() {
+        if (isNavDrawerOpen()) {
+            closeNavDrawer();
+            return;
+        } else {
+            Fragment favoriteFragment = getFavoriteFragment();
+            if (favoriteFragment != null && favoriteFragment.isVisible()) {
                 returnToHome();
-                return true;
-            } else if (isNavDrawerOpen()) {
-                closeNavDrawer();
-                return true;
+                return;
             }
         }
-        return super.onKeyDown(keyCode, event);
+        super.onBackPressed();
     }
 
     private Fragment getFavoriteFragment() {
@@ -211,24 +213,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void returnToHome() {
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.popBackStack();
         mDrawerManager.setCurrentItemIndex(0);
         setTitle(mDrawerManager.getCurrentTitle());
+        showMainFragment();
     }
 
     private void showFavoriteCitiesFragment() {
         FragmentManager fm = getFragmentManager();
-        String tag = FavoriteFragment.TAG;
-        FavoriteFragment fragment = new FavoriteFragment();
-        fm.beginTransaction().replace(R.id.content_frame, fragment, tag)
-                .addToBackStack(null).commit();
+        Fragment favoriteFragment = fm.findFragmentByTag(FavoriteFragment.TAG);
+        MainFragment mainFragment = (MainFragment) fm.findFragmentByTag(MainFragment.TAG);
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        if (favoriteFragment != null) {
+            if (mainFragment != null) {
+                fragmentTransaction.hide(mainFragment);
+            }
+            fragmentTransaction.show(favoriteFragment).commit();
+        } else {
+            FavoriteFragment fragment = new FavoriteFragment();
+            fragmentTransaction.replace(R.id.content_frame, fragment, FavoriteFragment.TAG).commit();
+        }
     }
 
     private void showMainFragment() {
         FragmentManager fm = getFragmentManager();
-        String tag = MainFragment.TAG;
-        Fragment fragment = new MainFragment();
-        fm.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
+        Fragment favoriteFragment = fm.findFragmentByTag(FavoriteFragment.TAG);
+        MainFragment mainFragment = (MainFragment) fm.findFragmentByTag(MainFragment.TAG);
+        if (mainFragment == null) {
+            mainFragment = new MainFragment();
+            fm.beginTransaction().replace(R.id.content_frame, mainFragment, MainFragment.TAG).commit();
+        } else {
+            FragmentTransaction transaction = fm.beginTransaction();
+            if (favoriteFragment != null) {
+                transaction.hide(favoriteFragment);
+            }
+            transaction.show(mainFragment).commit();
+        }
     }
 }
