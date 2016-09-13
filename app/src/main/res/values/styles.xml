@@ -22,8 +22,6 @@
     <style name="CustomToolBarTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:textColorSecondary">@color/white</item>
-        <item name="android:background">@color/skyBlue</item>
     </style>
 
-    <style name="CustomAppBarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
 </resources>
