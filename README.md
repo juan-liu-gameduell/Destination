@@ -81,6 +81,7 @@ To download, cache and show images.
 * Refactoring network part
 Now rewriting network part with [RxJava](https://github.com/ReactiveX/RxJava).
 * Learn to modularise structure with [MVP](http://code.tutsplus.com/tutorials/an-introduction-to-model-view-presenter-on-android--cms-26162).
+* Add animations
 
 
 
