@@ -15,24 +15,19 @@ photos and detail information. Clicking a place to show it in Google Map. User c
 
 Here are some screenshots:
 
-<img src="https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg" width="48">
-* Home Page-Drawer Layout
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_drawer.jpeg)
+<img src="https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg" width="320">
 
-* Home Page-Favorite
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_favorite.jpeg)
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/main_drawer.jpeg" width="320">
 
-* City Details Page
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail.jpeg)
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/main_favorite.jpeg" width="320">
 
-* City Details Page-Scroll Down
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail_scroll_down.jpeg)
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail.jpeg" width="320">
 
-* City Details Page-Click a place to show in Google Maps
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/show_goolge_map.jpeg)
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail_scroll_down.jpeg" width="320">
 
-* Search a place
-![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/search.jpeg)
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/show_goolge_map.jpeg" width="320">
+
+<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/search.jpeg" width="320">
 
 
 <br><br>
