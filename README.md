@@ -15,9 +15,7 @@ photos and detail information. Clicking a place to show it in Google Map. User c
 
 Here are some screenshots:
 
-* Home Page
-![alt tag](https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg  | width=100)
-
+<img src="https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg" width="48">
 * Home Page-Drawer Layout
 ![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_drawer.jpeg)
 
