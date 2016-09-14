@@ -7,12 +7,13 @@ It depends on google places API to search cities and places in details.
 The project is majorly developed in 10 days (4th, Sep to 14th Sep, see commit history), during which I learned a lot. There should still be some bugs or defeats, but I'm keeping optimizing it. 
 
 
+
 ### Features
 
 Users can search cities for its photos, and points of interest, such as parks, churches, libraries, historical buildings, etc. The results of points of interests includes
 photos and detail information. Clicking a place to show it in Google Map. User could also add a city into his favorite cities.
 
-Here are some screenshots.
+Here are some screenshots:
 
 
 
@@ -24,11 +25,7 @@ Here are some screenshots.
 4 Using sub-threads to handle heavy tasks.
 5 Avoiding memory leak.
 
-### TODO
 
-1 Refactoring network part
-Now rewriting network part with [RxJava](https://github.com/ReactiveX/RxJava).
-2 Learn to modularise structure with [MVP](http://code.tutsplus.com/tutorials/an-introduction-to-model-view-presenter-on-android--cms-26162).
 
 ### Android Technologies:
 
@@ -63,7 +60,9 @@ It is used to receive messages from service.
 #### AsyncTask: 
 It is used to read cities' data from files and download cities' data and places of interest's data from internet
 
-Third-part libraries:
+
+
+### Third-part libraries:
 #### Retrofit: 
 It is used to do the network tasks.
 #### Piccaso: 
@@ -71,6 +70,13 @@ To download, cache and show images.
 #### Google Api: 
 [Place AutoComplete](https://developers.google.com/places/web-service/autocomplete) to search cities. [Place Details](https://developers.google.com/places/web-service/details) to fetch city details.
 
+
+
+### TODO
+
+1 Refactoring network part
+Now rewriting network part with [RxJava](https://github.com/ReactiveX/RxJava).
+2 Learn to modularise structure with [MVP](http://code.tutsplus.com/tutorials/an-introduction-to-model-view-presenter-on-android--cms-26162).
 
 
 
