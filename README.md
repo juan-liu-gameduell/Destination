@@ -16,13 +16,11 @@ photos and detail information. Clicking a place to show it in Google Map. User c
 Here are some screenshots:
 
 <img src="https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg" width="320">
-<br>
 <img src="https://github.com/janeeliu/Destination/blob/master/art/main_drawer.jpeg" width="320">
-<br>
+<br><br>
 <img src="https://github.com/janeeliu/Destination/blob/master/art/main_favorite.jpeg" width="320">
-<br>
 <img src="https://github.com/janeeliu/Destination/blob/master/art/city_detail.jpeg" width="320">
-<br>
+<br><br>
 <img src="https://github.com/janeeliu/Destination/blob/master/art/city_detail_scroll_down.jpeg" width="320">
 <br>
 <img src="https://github.com/janeeliu/Destination/blob/master/art/show_goolge_map.jpeg" width="320">
