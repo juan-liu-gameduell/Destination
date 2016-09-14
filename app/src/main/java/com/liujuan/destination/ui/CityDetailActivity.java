@@ -262,7 +262,6 @@ public class CityDetailActivity extends AppCompatActivity {
             startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
         } catch (GooglePlayServicesRepairableException |
                 GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
             Log.i(TAG, "google place autocomplete intent error:" + e.getMessage());
         }
     }
