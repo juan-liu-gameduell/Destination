@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -342,6 +343,8 @@ public class CityDetailActivity extends AppCompatActivity {
 
     private void setCityName(String name) {
         getSupportActionBar().setTitle(name);
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        collapsingToolbarLayout.setTitle(name);
     }
 
     private class FetchPlaceOfInterestTask extends AsyncTask<City, Void, PlaceResponse> {
