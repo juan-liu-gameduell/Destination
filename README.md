@@ -14,26 +14,27 @@ Users can search cities for its photos, and points of interest, such as parks, c
 photos and detail information. Clicking a place to show it in Google Map. User could also add a city into his favorite cities.
 
 Here are some screenshots:
-Home Page
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/main_home.jpeg)
 
-Home Page-Drawer Layout
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/main_drawer.jpeg)
+* Home Page
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_home.jpeg)
 
-Home Page-Favorite
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/main_favorite.jpeg)
+* Home Page-Drawer Layout
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_drawer.jpeg)
 
-City Details Page
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/city_detail.jpeg)
+* Home Page-Favorite
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/main_favorite.jpeg)
 
-City Details Page-Scroll Down
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/city_detail_scroll_down.jpeg)
+* City Details Page
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail.jpeg)
 
-City Details Page-Click a place to show in Google Maps
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/show_goolge_map.jpeg)
+* City Details Page-Scroll Down
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail_scroll_down.jpeg)
 
-Search a place
-![alt tag](https://github.com/janeeliu/Destination/tree/master/art/search.jpeg)
+* City Details Page-Click a place to show in Google Maps
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/show_goolge_map.jpeg)
+
+* Search a place
+![alt tag](https://github.com/janeeliu/Destination/tree/blob/master/art/search.jpeg)
 
 
 <br><br>
