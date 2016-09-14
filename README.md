@@ -17,17 +17,17 @@ Here are some screenshots:
 
 <img src="https://github.com/janeeliu/Destination/blob/master/art/main_home.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/main_drawer.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/main_drawer.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/main_favorite.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/main_favorite.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/city_detail.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/city_detail_scroll_down.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/city_detail_scroll_down.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/show_goolge_map.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/show_goolge_map.jpeg" width="320">
 <br>
-<img src="https://github.com/janeeliu/Destination/tree/blob/master/art/search.jpeg" width="320">
+<img src="https://github.com/janeeliu/Destination/blob/master/art/search.jpeg" width="320">
 
 
 <br><br>
