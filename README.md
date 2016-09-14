@@ -14,6 +14,7 @@ Users can search cities for its photos, and points of interest, such as parks, c
 photos and detail information. Clicking a place to show it in Google Map. User could also add a city into his favorite cities.
 
 Here are some screenshots:
+![alt tag](https://github.com/janeeliu/Destination/art/main_home.jpeg)
 
 <br><br>
 
