@@ -10,6 +10,10 @@ The project is majorly developed in 10 days (4th, Sep to 14th Sep, see commit hi
 
 ### Features
 
+Please install app/app-release.apk for testing.
+
+<br>
+
 Users can search cities for its photos, and points of interest, such as parks, churches, libraries, historical buildings, etc. The results of points of interests includes
 photos and detail information. Clicking a place to show it in Google Map. User could also add a city into his favorite cities.
 
