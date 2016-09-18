@@ -10,7 +10,7 @@ The project is majorly developed in 10 days (4th, Sep to 14th Sep, see commit hi
 
 ### Features
 
-Please install app/app-release.apk for testing.
+Please install [app/app-release.apk](https://github.com/janeeliu/Destination/blob/master/app/app-release.apk) for testing.
 
 <br>
 
